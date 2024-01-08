@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
-import { offers } from "../API/offers";
+import Link from 'next/link'
+import { offers } from "../API/offers"
 
-function ListAllOffers() {
+import { FC } from 'react'
+
+const ListAllOffers: FC = () => {
     return (
         <div className="offers__coloum-all">
             {offers.map((offer) => {
@@ -30,17 +32,17 @@ function ListAllOffers() {
                                     </div>
                                 </div>
                             </div>
-                            <Link to={`/offer/${offer.id}`}>
+                            <Link href={`/offer/${offer.id}`}>
                                 <button className="offers__button">
                                     VIEW
                                 </button>
                             </Link>
                         </div>
                     </div>
-                );
+                )
             })}
         </div>
-    );
+    )
 }
 
-export default ListAllOffers;
+export default ListAllOffers

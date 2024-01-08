@@ -1,6 +1,7 @@
-import { works } from "../API/works";
+import { works } from "../API/works"
+import { FC } from 'react'
 
-function ListWork() {
+const ListWork: FC = () => {
     const slicedWorks = works.slice(0, 2)
     return (
         <div className="works__coloum">
@@ -22,10 +23,10 @@ function ListWork() {
                             </div>
                         </div>
                     </div>
-                );
+                )
             })}
         </div>
-    );
+    )
 }
 
-export default ListWork;
+export default ListWork

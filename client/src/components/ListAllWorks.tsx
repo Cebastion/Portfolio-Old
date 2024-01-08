@@ -1,6 +1,8 @@
-import { works } from "../API/works";
+import { works } from "../API/works"
 
-function ListAllWorks() {
+import { FC } from 'react'
+
+const ListAllWorks: FC = () => {
     return (
         <div className="works__coloum">
             {works.map((work) => {
@@ -21,10 +23,10 @@ function ListAllWorks() {
                             </div>
                         </div>
                     </div>
-                );
+                )
             })}
         </div>
-    );
+    )
 }
 
-export default ListAllWorks;
+export default ListAllWorks

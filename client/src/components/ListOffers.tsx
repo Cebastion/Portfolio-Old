@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
-import { offers } from "../API/offers";
+import Link from 'next/link'
+import { offers } from "../API/offers"
 
-function ListOffers() {
+import { FC } from 'react'
+
+const ListOffers: FC = () => {
     const slicedOffers = offers.slice(0, 2)
     return (
         <div className="offers__coloum">
@@ -31,17 +33,17 @@ function ListOffers() {
                                     </div>
                                 </div>
                             </div>
-                            <Link to={`/offer/${offer.id}`}>
+                            <Link href={`/offer/${offer.id}`}>
                                 <button className="offers__button">
                                     VIEW
                                 </button>
                             </Link>
                         </div>
                     </div>
-                );
+                )
             })}
         </div>
-    );
+    )
 }
 
-export default ListOffers;
+export default ListOffers

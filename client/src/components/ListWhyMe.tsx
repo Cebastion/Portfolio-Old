@@ -1,7 +1,9 @@
-import React from 'react';
-import { whyMe } from "../API/whyMe";
+import React from 'react'
+import { whyMe } from "../API/whyMe"
 
-function ListWhyMe() {
+import { FC } from 'react'
+
+const ListWhyMe: FC = () => {
     return (
         <div className="why-me__row">
             {whyMe.map((el) => {
@@ -17,10 +19,10 @@ function ListWhyMe() {
                             <span>{el.text}</span>
                         </div>
                     </div>
-                );
+                )
             })}
         </div>
-    );
+    )
 }
 
-export default ListWhyMe;
+export default ListWhyMe
