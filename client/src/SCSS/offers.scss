@@ -1,0 +1,144 @@
+.offers__block-all{
+    margin: 30px 0 0 0;
+}
+
+.offers__img img{
+    object-fit: cover;
+    object-position: center;
+    width: 339px;
+    height: 230px;
+}
+
+.offers__title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.offers__title span{
+    color: var(--dark-color, #21243D);
+font-family: Heebo;
+font-size: 30px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}   
+
+.offers__title a{
+    color: var(--dark-color, #ff7300);
+font-family: Heebo;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.offers__coloum{
+    margin: 60px 0 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.offers__coloum-all{
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.offers__row{
+    margin: 10px 0 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.offers__block-itle {
+    max-width: 200px;
+}
+
+.offers__block-itle span{
+    color: var(--dark-color, #21243D);
+font-family: Heebo;
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 15px; 
+}
+
+.offers__price span{
+    color: var(--dark-color, #04490f);
+font-family: Heebo;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: 30px; 
+}
+
+.offers__avatar{
+    display: flex;
+}
+
+.avatar__img img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.avatar__name{
+    margin: 0 0 0 15px;
+}
+
+.avater__country{
+    margin: 5px 0 0 0;
+}
+
+.avatar__name span{
+    font-family: Heebo;
+font-style: normal;
+    font-size: .6875rem;
+    color: #707276;
+    font-weight: 600;
+}
+
+.avater__country span{
+    font-family: Heebo;
+font-style: normal;
+    font-size: .6875rem;
+    color: #98999c;
+    text-transform: uppercase;
+}
+
+.offers__button{
+    transition: 0.3s ease;
+    font-family: Heebo;
+font-style: normal;
+    border-radius: 5px;
+    width: 82px;
+    height: 32px;
+    border: #ff7300 solid 2px;
+    color: #ff7300;
+}
+
+.offers__button:hover{
+    transition: 0.3s ease;
+    background-color: #ff7300;
+    color: white;
+}
+
+@media (max-width:768px) {
+    .offers__coloum, .offers__coloum-all{
+        margin: 10px 0 0 0;
+        flex-direction: column;
+    }
+    .offers__block, .offers__block-all{
+        margin: 30px 0 0 0;
+    }
+}
+
+@media (max-width:320px) {
+    .offers__block, .offers__block-all{
+        width: 100%;
+    }
+}

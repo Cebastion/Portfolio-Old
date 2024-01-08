@@ -1,0 +1,32 @@
+.header__container{
+    width:100%;
+}
+.header__menu{
+    display: flex;
+    justify-content: right;
+    margin: 30px 60px 90px 0px;
+}
+
+.header__menu li {
+    margin: 0 0 0 20px;
+}
+
+.header__menu li a{
+    color: #000;
+text-align: right;
+font-family: Heebo;
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.header__menu li a:hover{
+    color: #ff7300;
+}
+
+@media (max-width:560px) {
+    .header__menu {
+        margin: 30px 60px 60px 0px;
+    }
+}

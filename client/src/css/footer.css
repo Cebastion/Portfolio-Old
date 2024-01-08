@@ -1,0 +1,30 @@
+.footer {
+  margin: 135px 0 0 0;
+}
+
+.footer__icons {
+  margin: 0 0 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.footer__icons a img {
+  margin: 0 10px;
+  width: 30px;
+  height: 30px;
+}
+
+.footer__copywrite {
+  width: 100%;
+  text-align: center;
+}
+
+.footer__copywrite span {
+  color: var(--dark, #21243D);
+  text-align: center;
+  font-family: Heebo;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

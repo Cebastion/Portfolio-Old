@@ -1,0 +1,91 @@
+.offer__img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.offer__img img {
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.offer__title{
+    text-align: center;
+}
+
+.offer__title h2 {
+    color: var(--dark-color, #21243D);
+    font-family: Heebo;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 60px;
+}
+
+.description__text span {
+    color: var(--dark-color, #21243D);
+    font-family: Heebo;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.offer__order {
+    margin: 20px 0 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order__price span {
+    color: var(--dark-color, #04490f);
+    font-family: Heebo;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+}
+
+.offer__button {
+    width: 320px;
+    height: 55px;
+    font-size: 20px;
+    transition: 0.3s ease;
+    font-family: Heebo;
+    font-style: normal;
+    border-radius: 5px;
+    background-color: #ff7300;
+    border: #ff7300 solid 2px;
+    color: white;
+}
+
+.offer__button:hover{
+    transition: 0.3s ease;
+    background-color: white;
+    color: #ff7300;
+}
+
+.description__title{
+    margin: 20px 0;
+}
+
+.description__title span{
+    color: var(--dark-color, #21243D);
+font-family: Heebo;
+font-size: 30px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+@media (max-width:425px){
+    .offer__button {
+        width: 160px;
+    }
+    .description__title span {
+        font-size: 20px;
+    }
+}
