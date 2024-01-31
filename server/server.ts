@@ -1,7 +1,6 @@
 require('dotenv').config()
 import cors from 'cors'
 import express, { json, Request, Response } from 'express'
-import path from 'path'
 import { ConfigService } from './config/config.service'
 import { MailerService } from './service/mailer.service'
 
@@ -9,19 +8,11 @@ const app = express()
 app.use(json())
 app.use(cors())
 
-app.use('/admin/', express.static(path.join(__dirname, 'admin')))
-
-app.get('/admin/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'admin', 'admin.html'))
-})
-
-app.use('/', express.static(path.resolve(__dirname, 'public')))
-
-app.get('/*', (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
-})
-
 app.get('/works', (req: Request, res: Response) => {
+  res.send("Server is running")
+})
+
+app.get('/offer', (req: Request, res: Response) => {
   res.send("Server is running")
 })
 
@@ -34,6 +25,22 @@ app.post('/add_work', (req: Request, res: Response) => {
 })
 
 app.post('/add_offer', (req: Request, res: Response) => {
+  res.send("Server is running")
+})
+
+app.post('/edit_work', (req: Request, res: Response) => {
+  res.send("Server is running")
+})
+
+app.post('/edit_offer', (req: Request, res: Response) => {
+  res.send("Server is running")
+})
+
+app.post('/delete_work', (req: Request, res: Response) => {
+  res.send("Server is running")
+})
+
+app.post('/delete_offer', (req: Request, res: Response) => {
   res.send("Server is running")
 })
 
