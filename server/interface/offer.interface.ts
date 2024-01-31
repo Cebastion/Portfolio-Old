@@ -1,4 +1,4 @@
-interface Offer {
+export interface Offer {
   _id: string;
   title: string;
   description: string;
@@ -6,6 +6,13 @@ interface Offer {
   image: string;
 }
 
-interface Offers {
+export interface Offers {
   offers: Offer[];
+}
+export interface IOfferSchema extends Document {
+  _id: string;
+  title: string;
+  description: string;
+  price: number;
+  image: string;
 }

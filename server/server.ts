@@ -3,7 +3,9 @@ import cors from 'cors'
 import express, { json, Request, Response } from 'express'
 import { ConfigService } from './config/config.service'
 import { MailerService } from './service/mailer.service'
+import { MongoDb } from './service/mongodb.service'
 
+const db = new MongoDb(new ConfigService())
 const app = express()
 app.use(json())
 app.use(cors())

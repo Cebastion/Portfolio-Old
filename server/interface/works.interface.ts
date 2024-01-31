@@ -1,4 +1,4 @@
-interface IWork { 
+export interface IWork { 
   _id: string;
   title: string;
   description: string;
@@ -6,6 +6,14 @@ interface IWork {
   img: string;
 }
 
-interface IWorks {
+export interface IWorks {
   works: IWork[];
+}
+
+export interface IWorkSchema extends Document {
+  _id: string;
+  title: string;
+  description: string;
+  url: string;
+  img: string;
 }
