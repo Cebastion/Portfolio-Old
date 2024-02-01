@@ -1,9 +1,10 @@
-import ListOffers from '@/components/ListOffers'
-import ListWhyMe from '@/components/ListWhyMe'
-import ListWork from '@/components/ListWork'
+
+import ListWhyMe from './components/ListWhyMe'
+import ListWork from './components/ListWork'
 import Image from 'next/image'
 import Link from 'next/link'
 import style from './main.module.scss'
+import ListOffers from './components/ListOffers'
 
 export default function Home() {
   return (

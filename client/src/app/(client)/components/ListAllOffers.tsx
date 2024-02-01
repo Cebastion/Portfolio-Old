@@ -1,15 +1,14 @@
 import Link from 'next/link'
-import { offers } from "../API/offers"
+import { offers } from "../../../API/offers.js"
 
 import { FC } from 'react'
 
-const ListOffers: FC = () => {
-    const slicedOffers = offers.slice(0, 2)
+const ListAllOffers: FC = () => {
     return (
-        <div className="offers__coloum">
-            {slicedOffers.map((offer) => {
+        <div className="offers__coloum-all">
+            {offers.map((offer) => {
                 return (
-                    <div className="offers__block" key={offer.id}>
+                    <div className="offers__block-all" key={offer.id}>
                         <div className="offers__img">
                             <img src={offer.img} alt="" />
                         </div>
@@ -46,4 +45,4 @@ const ListOffers: FC = () => {
     )
 }
 
-export default ListOffers
+export default ListAllOffers
