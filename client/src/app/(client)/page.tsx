@@ -1,4 +1,3 @@
-
 import ListWhyMe from './components/ListWhyMe'
 import ListWork from './components/ListWork'
 import Image from 'next/image'
@@ -14,7 +13,7 @@ export default function Home() {
           <div className={style.hello__row}>
             <div className={style.row__who}>
               <div className={style.who__title}>
-                <h1>Hello, I am Dmitry, Full-stack developer</h1>
+                <h1>Hello, I am Dmytro, Full-stack developer</h1>
               </div>
               <div className={style.who__text}>
                 <span>"Your Vision, Our Implementation: Full-stack Developer on Your Side."</span>
@@ -52,7 +51,7 @@ export default function Home() {
           <ListWork />
         </div>
         <div className={style.content__offers}>
-          <div className={style.offers__title}>
+          <div className={style.works__title}>
             <span>Featured offers</span>
             <Link href="/offers">view all offers</Link>
           </div>

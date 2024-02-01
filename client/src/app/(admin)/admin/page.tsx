@@ -14,7 +14,7 @@ const page: FC = () => {
                     <ul className="menu_list">
                         <li>Works</li>
                         <li>Offers</li>
-                        <li>Skills</li>
+                        <li>User</li>
                     </ul>
                 </nav>
             </aside>
