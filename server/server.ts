@@ -4,14 +4,16 @@ import express, { json, Request, Response } from 'express'
 import { ConfigService } from './config/config.service'
 import { MailerService } from './service/mailer.service'
 import { MongoDb } from './service/mongodb.service'
+import { IWork } from './interface/works.interface'
 
 const db = new MongoDb(new ConfigService())
 const app = express()
 app.use(json())
 app.use(cors())
 
-app.get('/works', (req: Request, res: Response) => {
-  res.send("Server is running")
+app.get('/works', async (req: Request, res: Response) => {
+  const works = await db.GetWorks()
+  res.json(works)
 })
 
 app.get('/offer', (req: Request, res: Response) => {
@@ -22,8 +24,9 @@ app.get('/offers', (req: Request, res: Response) => {
   res.send("Server is running")
 })
 
-app.post('/add_work', (req: Request, res: Response) => {
-  res.send("Server is running")
+app.post('/add_work', async (req: Request, res: Response) => {
+  const data: IWork = req.body
+  await db.AddWork(data)
 })
 
 app.post('/add_offer', (req: Request, res: Response) => {

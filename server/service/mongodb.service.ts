@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 import { IConfigService } from '../config/config.interface'
+import { IWork } from '../interface/works.interface'
+import { WorkModule } from '../module/work.module'
 
 export class MongoDb {
   private DBOffers: string
@@ -17,8 +19,16 @@ export class MongoDb {
     await mongoose.disconnect()
   }
 
-  GetWorks() {
-    this.connect(this.DBWorks)
+  async GetWorks() {
+    try {
+      await this.connect(this.DBWorks)
+      const works = await WorkModule.find()
+      return works
+    } catch (error) {
+      console.log(error)
+    } finally {
+      await this.disconnect()
+    }
   }
 
   GetOffers() {
@@ -33,8 +43,16 @@ export class MongoDb {
     this.connect(this.DBOffers)
   }
 
-  AddWork() {
-    this.connect(this.DBWorks)
+  async AddWork(work: IWork) {
+    try {
+      await this.connect(this.DBWorks)
+      await WorkModule.create({_id: new mongoose.Types.ObjectId(), title: work.title, description: work.description, url: work.url})
+    } catch (error) {
+      console.log(error)
+      return error
+    } finally {
+      await this.disconnect()
+    }
   }
 
   DeleteOffer() {
