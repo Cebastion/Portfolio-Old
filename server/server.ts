@@ -27,10 +27,12 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const _id = req.query._id
-    const ext = path.extname(file.originalname)
+    if(_id) {
+      const ext = path.extname(file.originalname)
 
     const filename = `${_id}${ext}`
     cb(null, filename)
+    }
   },
 })
 
@@ -58,8 +60,9 @@ app.post('/add_offer', (req: Request, res: Response) => {
   res.send("Server is running")
 })
 
-app.post('/edit_work', (req: Request, res: Response) => {
-  res.send("Server is running")
+app.post('/edit_work', upload.single('img'), (req: Request, res: Response) => {
+  const data = req.body
+  db.UpdateWork(data)
 })
 
 app.post('/edit_offer', (req: Request, res: Response) => {

@@ -4,10 +4,12 @@ import style from './admin.module.scss'
 import CreateWork from './component/CreateWork/CreateWork'
 import { AdminService } from '../service/admin.service'
 import { IWorks } from '../interface/work.interface'
+import EditWork from './component/EditWork/EditWork'
 
 const page: FC = () => {
     const [ActivePop, SetActivePop] = useState('Works')
     const [ActivePopCreate, SetActivePopCreate] = useState(false)
+    const [ActivePopEdit, SetActivePopEdit] = useState(false)
     const [ListWorks, SetListWorks] = useState<IWorks>({ works: [] })
     const [ListOffers, SetListOffers] = useState()
 
@@ -69,6 +71,7 @@ const page: FC = () => {
                                             </svg>
 
                                         </button>
+                                        {ActivePopEdit && (<EditWork SetActivePopEdit={SetActivePopEdit} work={work}/>)}
                                         <button className="item__delete">
                                             <svg width="16.666504" height="18.333252" viewBox="0 0 16.6665 18.3333" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <desc>
