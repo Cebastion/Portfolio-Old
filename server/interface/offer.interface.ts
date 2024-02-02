@@ -1,13 +1,13 @@
-export interface Offer {
+export interface IOffer {
   _id: string;
   title: string;
   description: string;
   price: number;
-  image: string;
+  img: string;
 }
 
-export interface Offers {
-  offers: Offer[];
+export interface IOffers {
+  offers: IOffer[];
 }
 export interface IOfferSchema extends Document {
   _id: string;

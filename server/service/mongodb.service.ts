@@ -4,6 +4,8 @@ import { IWork, IWorks } from '../interface/works.interface'
 import { WorkModule } from '../module/work.module'
 import fs from 'fs'
 import path from 'path'
+import { IOffer, IOfferSchema, IOffers } from '../interface/offer.interface'
+import { OfferModule } from '../module/offer.module'
 
 export class MongoDb {
   private DBOffers: string
@@ -87,16 +89,56 @@ async GetWorks() {
 }
 
 
-  GetOffers() {
-    this.connect(this.DBOffers)
+  async GetOffers() {
+    try {
+      await this.connect(this.DBOffers);
+      const offers = await OfferModule.find();
+      const offer_all: IOffers = {
+        offers: await Promise.all(
+          offers.map(async offer => {
+                  const img = this.findImg(offer._id);
+                  return {
+                      _id: offer._id,
+                      title: offer.title,
+                      description: offer.description,
+                      price: offer.price,
+                      img: img,
+                  };
+              })
+          ),
+      };
+
+      return offer_all;
+  } finally {
+      await this.disconnect();
+  }
   }
 
-  GetOffer() {
-    this.connect(this.DBOffers)
+  async GetOffer(_id: string) {
+    try {
+      await this.connect(this.DBOffers)
+      const offer_path: IOfferSchema = await OfferModule.findOne({_id: _id})
+      const img = this.findImg(_id)
+      const offer: IOffer = {
+        _id: _id,
+        title: offer_path.title,
+        description: offer_path.description,
+        price: offer_path.price,
+        img: img
+      }
+      return offer
+    } finally {
+      await this.disconnect()
+    }
   }
 
-  AddOffer() {
-    this.connect(this.DBOffers)
+  async AddOffer(offer: IOffer) {
+    try {
+      await this.connect(this.DBOffers)
+      await OfferModule.create({_id: offer._id, title: offer.title, description: offer.description, price: offer.price})
+    } finally {
+      await this.disconnect()
+    }
   }
 
   async AddWork(work: IWork) {
@@ -108,8 +150,14 @@ async GetWorks() {
     }
   }
 
-  DeleteOffer() {
-    this.connect(this.DBOffers)
+  async DeleteOffer(_id: string) {
+    try {
+      await this.connect(this.DBOffers)
+      await OfferModule.deleteOne({_id: _id})
+      this.DeleteImg(_id)
+    } finally {
+      await this.disconnect() 
+    }   
   }
 
   async DeleteWork(_id: string) {
@@ -122,8 +170,13 @@ async GetWorks() {
     }   
   }
 
-  UpdateOffer() {
-    this.connect(this.DBOffers)
+  async UpdateOffer(offer: IOffer) {
+    try{
+      await this.connect(this.DBOffers)
+      OfferModule.updateOne({_id: offer._id}, {title: offer.title, description: offer.description, price: offer.price})
+    } finally {
+      await this.disconnect()
+    }
   }
 
   async UpdateWork(work: IWork) {  
