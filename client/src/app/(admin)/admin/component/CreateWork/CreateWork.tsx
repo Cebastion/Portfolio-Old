@@ -3,6 +3,8 @@ import { ChangeEvent, FC, useState } from 'react'
 import style from './CreateWork.module.scss'
 import { IWork } from '@/app/(admin)/interface/work.interface'
 import { AdminService } from '@/app/(admin)/service/admin.service'
+import axios from 'axios'
+import { randomBytes } from 'crypto'
 
 interface CreateWorkProps {
   SetActivePopCreate: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,10 +20,12 @@ const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
   }
   const [Work, SetWork] = useState<IWork>(work)
   const [Preview, SetPreview] = useState<string>('')
+  const [Photo, SetPhoto] = useState<File>()
 
   const PreviewPhoto = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       SetPreview(URL.createObjectURL(e.target.files[0]))
+      SetPhoto(e.target.files[0])
     }
   }
 
@@ -33,10 +37,21 @@ const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
 
   const CreateWork = () => {
     try {
-      const adminService = new AdminService()
-      adminService.CreateWork(Work)
-      //SetActivePopCreate(false)
-      //SetWork(work)
+      if(Photo) {
+        const _id = randomBytes(12).toString('hex')
+        const formData = new FormData()
+        formData.append('img', Photo)
+        formData.append('_id', _id)
+        formData.append('title', Work.title)
+        formData.append('description', Work.description)
+        formData.append('url', Work.url)
+
+        axios.post(`http://localhost:5500/add_work/?_id=${_id}`, formData).then(res => {
+          SetActivePopCreate(false)
+          SetWork(work)
+          SetPreview('')
+        })
+      }
     } catch (error) {
       console.log(error)
     }
