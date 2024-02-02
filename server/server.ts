@@ -66,8 +66,9 @@ app.post('/edit_offer', (req: Request, res: Response) => {
   res.send("Server is running")
 })
 
-app.post('/delete_work', (req: Request, res: Response) => {
-  res.send("Server is running")
+app.post('/delete_work', async (req: Request, res: Response) => {
+  const _id = req.body
+  await db.DeleteWork(_id)
 })
 
 app.post('/delete_offer', (req: Request, res: Response) => {

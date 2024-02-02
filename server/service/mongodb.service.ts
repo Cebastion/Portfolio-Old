@@ -39,7 +39,27 @@ export class MongoDb {
     })
     
     return file as string;
-}
+  }
+
+  private DeleteImg(_id: string) {
+    const supportedFormats = ['webp', 'png', 'jpg']
+    const dir = path.join('images');
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+
+    const files = fs.readdirSync(dir);
+    const file = files.find(name => {
+      for (const format of supportedFormats) {
+        if (name.endsWith(`.${format}`) && name.split(`.${format}`)[0] === _id) {
+          return true;
+        }
+      }
+      return false;
+    })
+
+    fs.unlinkSync(`${dir}/${file}`)
+  }
 
 async GetWorks() {
   try {
@@ -61,8 +81,6 @@ async GetWorks() {
       };
 
       return work_all;
-  } catch (error) {
-      console.error(error);
   } finally {
       await this.disconnect();
   }
@@ -85,9 +103,6 @@ async GetWorks() {
     try {
       await this.connect(this.DBWorks)
       await WorkModule.create({_id: work._id, title: work.title, description: work.description, url: work.url})
-    } catch (error) {
-      console.log(error)
-      return error
     } finally {
       await this.disconnect()
     }
@@ -97,15 +112,26 @@ async GetWorks() {
     this.connect(this.DBOffers)
   }
 
-  DeleteWork() {
-    this.connect(this.DBWorks)  
+  async DeleteWork(_id: string) {
+    try {
+      await this.connect(this.DBWorks)
+      await WorkModule.deleteOne({_id: _id})
+      this.DeleteImg(_id)
+    } finally {
+      await this.disconnect() 
+    }   
   }
 
   UpdateOffer() {
     this.connect(this.DBOffers)
   }
 
-  UpdateWork() {  
-    this.connect(this.DBWorks)
+  async UpdateWork(work: IWork) {  
+    try{
+      await this.connect(this.DBWorks)
+      WorkModule.updateOne({_id: work._id}, {title: work.title, description: work.description, url: work.url})
+    } finally {
+      await this.disconnect()
+    }
   }
 }
