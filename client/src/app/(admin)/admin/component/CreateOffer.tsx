@@ -12,14 +12,14 @@ interface CreateWorkProps {
 }
 
 const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
-  const work: IOffer = {
+  const offer: IOffer = {
     _id: '',
     title: '',
     description: '',
-    url: '',
+    price: number,
     img: ''
   }
-  const [Work, SetWork] = useState<IWork>(work)
+  const [Offer, SetOffer] = useState<IOffer>(offer)
   const [Preview, SetPreview] = useState<string>('')
   const [Photo, SetPhoto] = useState<File>()
 
@@ -32,7 +32,7 @@ const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
 
   const CloseActivePopCreate = () => {
     SetActivePopCreate(false)
-    SetWork(work)
+    SetOffer(offer)
     SetPreview('')
   }
 
@@ -43,9 +43,9 @@ const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
         const formData = new FormData()
         formData.append('img', Photo)
         formData.append('_id', _id)
-        formData.append('title', Work.title)
-        formData.append('description', Work.description)
-        formData.append('url', Work.url)
+        formData.append('title', Offer.title)
+        formData.append('description', Offer.description)
+        formData.append('price', Offer.url)
 
         axios.post(`http://localhost:5500/add_work/?_id=${_id}`, formData).then(res => {
           SetActivePopCreate(false)
@@ -92,15 +92,15 @@ const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
           </div>
           <div className={style.form__title}>
             <label htmlFor="">Name:</label>
-            <input type="text" value={Work.title} onChange={(e) => SetWork({ ...Work, title: e.target.value })} />
+            <input type="text" value={Offer.title} onChange={(e) => SetOffer({ ...Offer, title: e.target.value })} />
           </div>
           <div className={style.form__desc}>
             <label htmlFor="">Description:</label>
-            <textarea value={Work.description} onChange={(e) => SetWork({ ...Work, description: e.target.value })}></textarea>
+            <textarea value={Offer.description} onChange={(e) => SetOffer({ ...Offer, description: e.target.value })}></textarea>
           </div>
           <div className={style.form__link}>
             <label htmlFor="">Price:</label>
-            <input type="text" value={Work.url} onChange={(e) => SetWork({ ...Work, url: e.target.value })} />
+            <input type="text" value={Offer.price} onChange={(e) => SetOffer({ ...Offer, price: e.target.value })} />
           </div>
         </main>
       </div>
