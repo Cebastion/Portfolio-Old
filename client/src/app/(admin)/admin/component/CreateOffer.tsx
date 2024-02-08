@@ -11,12 +11,12 @@ interface CreateWorkProps {
   SetActivePopCreate: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
+const CreateOffer: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
   const offer: IOffer = {
     _id: '',
     title: '',
     description: '',
-    price: number,
+    price: 0,
     img: ''
   }
   const [Offer, SetOffer] = useState<IOffer>(offer)
@@ -45,11 +45,11 @@ const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
         formData.append('_id', _id)
         formData.append('title', Offer.title)
         formData.append('description', Offer.description)
-        formData.append('price', Offer.url)
+        formData.append('price', String(Offer.price))
 
         axios.post(`http://localhost:5500/add_work/?_id=${_id}`, formData).then(res => {
           SetActivePopCreate(false)
-          SetWork(work)
+          SetOffer(offer)
           SetPreview('')
         })
       }
@@ -77,7 +77,7 @@ const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
           <h2 className={style.header__title}>
             Create Work
           </h2>
-          <button className={style.header__create} onClick={CreateWork}>
+          <button className={style.header__create} onClick={CreateOffer}>
             Create
           </button>
         </header>
@@ -100,7 +100,7 @@ const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
           </div>
           <div className={style.form__link}>
             <label htmlFor="">Price:</label>
-            <input type="text" value={Offer.price} onChange={(e) => SetOffer({ ...Offer, price: e.target.value })} />
+            <input type="text" value={Offer.price} onChange={(e) => SetOffer({ ...Offer, price: parseInt(e.target.value) })} />
           </div>
         </main>
       </div>
