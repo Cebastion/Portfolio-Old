@@ -6,4 +6,8 @@ export class AdminService {
     const { data } = await axios.get<IWorks>('http://localhost:5500/works')
     return data
   }
+
+  static async DeleteWorks(_id: string) {
+    await axios.post(`http://localhost:5500/delete_work/${_id}`)
+  }
 }

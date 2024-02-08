@@ -69,8 +69,8 @@ app.post('/edit_offer', (req: Request, res: Response) => {
   res.send("Server is running")
 })
 
-app.post('/delete_work', async (req: Request, res: Response) => {
-  const _id = req.body
+app.post('/delete_work/:_id', async (req: Request, res: Response) => {
+  const _id = req.params._id
   await db.DeleteWork(_id)
 })
 
@@ -99,7 +99,7 @@ app.get('/image/:_id', (req: Request, res: Response) => {
     return false
   })
   if (!!file) {
-    res.sendFile(file)
+    res.sendFile(`${__dirname}/${dir}/${file}`)
   } else {
     res.send({ error: '404' })
   }

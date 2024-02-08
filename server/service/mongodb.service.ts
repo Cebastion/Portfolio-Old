@@ -4,7 +4,7 @@ import { IWork, IWorks } from '../interface/works.interface'
 import { WorkModule } from '../module/work.module'
 import fs from 'fs'
 import path from 'path'
-import { IOffer, IOfferSchema, IOffers } from '../interface/offer.interface'
+import { IOffer, IOffers } from '../interface/offer.interface'
 import { OfferModule } from '../module/offer.module'
 
 export class MongoDb {
@@ -117,10 +117,13 @@ async GetWorks() {
   async GetOffer(_id: string) {
     try {
       await this.connect(this.DBOffers)
-      const offer_path: IOfferSchema = await OfferModule.findOne({_id: _id})
+      const offer_path = await OfferModule.findOne({_id: _id})
+      if (offer_path === null) {
+        throw new Error('Offer not found');
+      }
       const img = this.findImg(_id)
       const offer: IOffer = {
-        _id: _id,
+        _id: offer_path._id,
         title: offer_path.title,
         description: offer_path.description,
         price: offer_path.price,

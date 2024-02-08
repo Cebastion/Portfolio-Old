@@ -17,6 +17,10 @@ const page: FC = () => {
         SetActivePopCreate(!ActivePopCreate)
     }
 
+    const ControlActivePopEdit = () => {
+        SetActivePopEdit(!ActivePopEdit)
+    }
+
     const ControlActivePop = (e: React.MouseEvent<HTMLButtonElement>) => {
         SetActivePop(e.currentTarget.id)
     }
@@ -25,6 +29,14 @@ const page: FC = () => {
         if (ActivePop === 'Works') {
             const works: IWorks = await AdminService.GetWorks()
             SetListWorks(works)
+        }
+    }
+
+    const Delete = (_id: string) => {
+        if (ActivePop === 'Works') {
+            AdminService.DeleteWorks(_id).then(() => {
+                GetData()
+            })
         }
     }
 
@@ -61,7 +73,7 @@ const page: FC = () => {
                                 <div key={work._id} className={style.block__item}>
                                     <h3 className="item__title">{work.title}</h3>
                                     <nav className="item__menu">
-                                        <button className={style.item__edit}>
+                                        <button className={style.item__edit} onClick={ControlActivePopEdit}>
                                             <svg width="18.190430" height="18.190186" viewBox="0 0 18.1904 18.1902" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <desc>
                                                     Created with Pixso.
@@ -72,7 +84,7 @@ const page: FC = () => {
 
                                         </button>
                                         {ActivePopEdit && (<EditWork SetActivePopEdit={SetActivePopEdit} work={work}/>)}
-                                        <button className="item__delete">
+                                        <button className="item__delete" onClick={() => Delete(work._id)}>
                                             <svg width="16.666504" height="18.333252" viewBox="0 0 16.6665 18.3333" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <desc>
                                                     Created with Pixso.
