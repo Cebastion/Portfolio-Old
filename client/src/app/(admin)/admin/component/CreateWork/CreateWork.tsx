@@ -7,17 +7,17 @@ import axios from 'axios'
 import { randomBytes } from 'crypto'
 
 interface CreateWorkProps {
-  SetActivePopCreate: React.Dispatch<React.SetStateAction<boolean>>
+    SetActivePopCreate: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
-  const work: IWork = {
+   const work: IWork = {
     _id: '',
     title: '',
     description: '',
     url: '',
-    img: ''
-  }
+    img: '' 
+    }
   const [Work, SetWork] = useState<IWork>(work)
   const [Preview, SetPreview] = useState<string>('')
   const [Photo, SetPhoto] = useState<File>()
@@ -35,19 +35,18 @@ const CreateWork: FC<CreateWorkProps> = ({ SetActivePopCreate }) => {
     SetPreview('')
   }
 
-  const CreateWork = () => {
+  const CreateWork = async () => {
     try {
       if(Photo) {
-        const _id = randomBytes(12).toString('hex')
-        const formData = new FormData()
-        formData.append('img', Photo)
-        formData.append('_id', _id)
-        formData.append('title', Work.title)
-        formData.append('description', Work.description)
-        formData.append('url', Work.url)
-
-        axios.post(`http://localhost:5500/add_work/?_id=${_id}`, formData).then(res => {
-          SetActivePopCreate(false)
+          Work._id = randomBytes(12).toString('hex')
+          const formdata = new FormData()
+          formdata.append('_id', Work._id)
+          formdata.append('img', Photo)
+          formdata.append('title', Work.title)
+          formdata.append('description', Work.description)
+          formdata.append('url', Work.url)
+          await axios.post(`http://localhost:5500/add_work`, formdata).then(res => {
+              SetActivePopCreate(false)
           SetWork(work)
           SetPreview('')
         })

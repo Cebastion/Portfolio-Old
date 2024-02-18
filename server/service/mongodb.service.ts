@@ -23,46 +23,6 @@ export class MongoDb {
     await mongoose.disconnect()
   }
 
-  private findImg(_id: string): string {
-    const supportedFormats = ['webp', 'png', 'jpg']
-    const dir = path.join('images');
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
-
-    const files = fs.readdirSync(dir);
-    const file = files.find(name => {
-      for (const format of supportedFormats) {
-        if (name.endsWith(`.${format}`) && name.split(`.${format}`)[0] === _id) {
-          return true;
-        }
-      }
-      return false;
-    })
-    
-    return file as string;
-  }
-
-  private DeleteImg(_id: string) {
-    const supportedFormats = ['webp', 'png', 'jpg']
-    const dir = path.join('images');
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
-
-    const files = fs.readdirSync(dir);
-    const file = files.find(name => {
-      for (const format of supportedFormats) {
-        if (name.endsWith(`.${format}`) && name.split(`.${format}`)[0] === _id) {
-          return true;
-        }
-      }
-      return false;
-    })
-
-    fs.unlinkSync(`${dir}/${file}`)
-  }
-
 async GetWorks() {
   try {
       await this.connect(this.DBWorks);
@@ -70,13 +30,11 @@ async GetWorks() {
       const work_all: IWorks = {
           works: await Promise.all(
               works.map(async work => {
-                  const img = this.findImg(work._id);
                   return {
                       _id: work._id,
                       title: work.title,
                       description: work.description,
                       url: work.url,
-                      img: img,
                   };
               })
           ),
@@ -96,13 +54,11 @@ async GetWorks() {
       const offer_all: IOffers = {
         offers: await Promise.all(
           offers.map(async offer => {
-                  const img = this.findImg(offer._id);
                   return {
                       _id: offer._id,
                       title: offer.title,
                       description: offer.description,
                       price: offer.price,
-                      img: img,
                   };
               })
           ),
@@ -121,13 +77,11 @@ async GetWorks() {
       if (offer_path === null) {
         throw new Error('Offer not found');
       }
-      const img = this.findImg(_id)
       const offer: IOffer = {
         _id: offer_path._id,
         title: offer_path.title,
         description: offer_path.description,
         price: offer_path.price,
-        img: img
       }
       return offer
     } finally {
@@ -157,7 +111,6 @@ async GetWorks() {
     try {
       await this.connect(this.DBOffers)
       await OfferModule.deleteOne({_id: _id})
-      this.DeleteImg(_id)
     } finally {
       await this.disconnect() 
     }   
@@ -167,7 +120,6 @@ async GetWorks() {
     try {
       await this.connect(this.DBWorks)
       await WorkModule.deleteOne({_id: _id})
-      this.DeleteImg(_id)
     } finally {
       await this.disconnect() 
     }   

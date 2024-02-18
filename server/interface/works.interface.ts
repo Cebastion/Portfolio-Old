@@ -3,7 +3,7 @@ export interface IWork {
   title: string;
   description: string;
   url: string;
-  img: string;
+  img: Buffer;
 }
 
 export interface IWorks {
@@ -15,4 +15,5 @@ export interface IWorkSchema extends Document {
   title: string;
   description: string;
   url: string;
+  img: Buffer;
 }

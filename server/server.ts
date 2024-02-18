@@ -1,42 +1,35 @@
 require('dotenv').config()
 import cors from 'cors'
-import multer from 'multer'
-import path from 'path'
-import fs from 'fs'
 import express, { json, Request, Response } from 'express'
 import { ConfigService } from './config/config.service'
 import { MailerService } from './service/mailer.service'
 import { MongoDb } from './service/mongodb.service'
 import { IWork } from './interface/works.interface'
 import bodyParser from 'body-parser'
+import multer from 'multer'
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytes, deleteObject, getMetadata, updateMetadata } from "firebase/storage"
+
+const firebaseConfig = {
+    apiKey: "AIzaSyC1kYHttP6Xll6nbmueF-dsFArRkLvzytI",
+    authDomain: "portfolio-9d57e.firebaseapp.com",
+    projectId: "portfolio-9d57e",
+    storageBucket: "portfolio-9d57e.appspot.com",
+    messagingSenderId: "731287241085",
+    appId: "1:731287241085:web:115fe48e81da287aeb4c14"
+}
+
+const FB = initializeApp(firebaseConfig)
 
 const db = new MongoDb(new ConfigService())
 const app = express()
+const storage = getStorage(FB)
+const upload = multer()
+
 app.use(json())
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join('images')
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true })
-    }
-    cb(null, dir)
-  },
-  filename: (req, file, cb) => {
-    const _id = req.query._id
-    if(_id) {
-      const ext = path.extname(file.originalname)
-
-    const filename = `${_id}${ext}`
-    cb(null, filename)
-    }
-  },
-})
-
-const upload = multer({ storage: storage })
 
 app.get('/works', async (req: Request, res: Response) => {
   const works = await db.GetWorks()
@@ -51,17 +44,36 @@ app.get('/offers', (req: Request, res: Response) => {
   res.send("Server is running")
 })
 
-app.post('/add_work', upload.single('img'), async (req: Request, res: Response) => {
-  const data: IWork = req.body
-  await db.AddWork(data)
+app.post('/add_work', upload.single('img') ,async (req: Request, res: Response) => {
+    const data: IWork = req.body
+    const file = req.file
+    if(file) {
+        const metadata = {
+            contentType: file.mimetype,
+        }
+        const photo = new Blob([file.buffer])
+        const filename = `${data._id}.webp`
+        const storageRef = ref(storage, filename)
+        uploadBytes(storageRef, photo, metadata)
+        await db.AddWork(data)
+    }
 })
 
 app.post('/add_offer', (req: Request, res: Response) => {
   res.send("Server is running")
 })
 
-app.post('/edit_work', upload.single('img'), (req: Request, res: Response) => {
+app.post('/edit_work', upload.single('img') ,(req: Request, res: Response) => {
   const data = req.body
+  const file = req.file
+    if(file){
+        const metadata = {
+            contentType: file.mimetype,
+        }
+        const filename = `${data._id}.webp`
+        const storageRef = ref(storage, filename)
+        updateMetadata(storageRef, metadata)
+    }
   db.UpdateWork(data)
 })
 
@@ -71,6 +83,9 @@ app.post('/edit_offer', (req: Request, res: Response) => {
 
 app.post('/delete_work/:_id', async (req: Request, res: Response) => {
   const _id = req.params._id
+    const filename = `${_id}.webp`
+    const photoRef = ref(storage, filename)
+    deleteObject(photoRef)
   await db.DeleteWork(_id)
 })
 
@@ -85,26 +100,13 @@ app.post('/sendEmail', (req: Request, res: Response) => {
   res.send(result)
 })
 
-app.get('/image/:_id', (req: Request, res: Response) => {
-  const _id = req.params._id
-  const supportedFormats = ['webp', 'png', 'jpg']
-  const dir = path.join('images')
-  const files = fs.readdirSync(dir)
-  const file = files.find(name => {
-    for (const format of supportedFormats) {
-      if (name.endsWith(`.${format}`) && name.split(`.${format}`)[0] === _id) {
-        return true
-      }
-    }
-    return false
-  })
-  if (!!file) {
-    res.sendFile(`${__dirname}/${dir}/${file}`)
-  } else {
-    res.send({ error: '404' })
-  }
+app.get('/img/:_id', async (req: Request, res: Response) => {
+    const _id = req.params._id
+    const filename = `${_id}.webp`
+    const photoRef = ref(storage, filename)
+    return getMetadata(photoRef)
 })
 
 app.listen(5500, () => {
-  console.log("Active")
+    console.log(`http//:localhost:${5500}`)
 })
