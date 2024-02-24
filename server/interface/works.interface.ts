@@ -1,9 +1,8 @@
-export interface IWork { 
+export interface IWork {
   _id: string;
   title: string;
   description: string;
   url: string;
-  img: Buffer;
 }
 
 export interface IWorks {
@@ -15,5 +14,4 @@ export interface IWorkSchema extends Document {
   title: string;
   description: string;
   url: string;
-  img: Buffer;
 }
