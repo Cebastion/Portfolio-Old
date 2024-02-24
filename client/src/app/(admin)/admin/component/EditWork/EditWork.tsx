@@ -13,7 +13,14 @@ const EditWork: FC<EditWorkProps> = ({SetActivePopEdit, work}) => {
   const [Work, SetWork] = useState<IWork>(work);
   const [Preview, SetPreview] = useState<string>('');
   const [Photo, SetPhoto] = useState<File>();
+  const [GetPhoto, SetGetPhoto] = useState();
 
+  const GetPhotoFB = async () => {
+    const { data } = await axios.get(`http://localhost:5500/img/28e9171570735883a48b10b8`)
+    SetGetPhoto(data)
+  }
+
+  GetPhotoFB()
   const PreviewPhoto = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       SetPreview(URL.createObjectURL(e.target.files[0]));
@@ -109,7 +116,7 @@ const EditWork: FC<EditWorkProps> = ({SetActivePopEdit, work}) => {
                 className={style.add_img_block}
                 style={{
                   backgroundImage: `url(${
-                    Preview ? Preview : `http://localhost:5500/img/${Work._id}`
+                    Preview ? Preview : GetPhoto
                   })`,
                 }}></div>
             </label>

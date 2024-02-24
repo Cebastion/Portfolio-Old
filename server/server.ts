@@ -13,8 +13,8 @@ import {
   ref,
   uploadBytes,
   deleteObject,
-  getMetadata,
   updateMetadata,
+  getDownloadURL,
 } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -120,8 +120,8 @@ app.get('/img/:_id', async (req: Request, res: Response) => {
   const _id = req.params._id;
   const filename = `${_id}.webp`;
   const photoRef = ref(storage, filename);
-  const resualt = getMetadata(photoRef);
-  res.send(resualt);
+  const resualt = await getDownloadURL(photoRef);
+  res.json(resualt);
 });
 
 app.listen(5500, () => {
