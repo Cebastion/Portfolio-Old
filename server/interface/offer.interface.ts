@@ -3,6 +3,7 @@ export interface IOffer {
   title: string;
   description: string;
   price: number;
+  img: string;
 }
 
 export interface IOffers {
@@ -13,4 +14,5 @@ export interface IOfferSchema extends Document {
   title: string;
   description: string;
   price: number;
+  img: string;
 }

@@ -17,6 +17,7 @@ const CreateOffer: FC<CreateWorkProps> = ({SetActivePopCreate}) => {
     title: '',
     description: '',
     price: 0,
+    img: ''
   };
   const [Offer, SetOffer] = useState<IOffer>(offer);
   const [Preview, SetPreview] = useState<string>('');

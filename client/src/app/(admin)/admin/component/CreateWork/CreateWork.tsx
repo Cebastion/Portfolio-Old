@@ -16,6 +16,7 @@ const CreateWork: FC<CreateWorkProps> = ({SetActivePopCreate}) => {
     title: '',
     description: '',
     url: '',
+    img: ''
   };
   const [Work, SetWork] = useState<IWork>(work);
   const [Preview, SetPreview] = useState<string>('');

@@ -4,10 +4,12 @@ import {IWork, IWorks} from '../interface/works.interface';
 import {WorkModule} from '../module/work.module';
 import {IOffer, IOffers} from '../interface/offer.interface';
 import {OfferModule} from '../module/offer.module';
+import { FireBaseService } from './firebase.service';
 
 export class MongoDb {
   private DBOffers: string;
   private DBWorks: string;
+  private firebase = new FireBaseService()
   constructor(private readonly configService: IConfigService) {
     this.DBOffers = this.configService.get('URL_MONGO_OFFERS');
     this.DBWorks = this.configService.get('URL_MONGO_WORKS');
@@ -33,6 +35,7 @@ export class MongoDb {
               title: work.title,
               description: work.description,
               url: work.url,
+              img: await this.firebase.GetPhoto(work._id),
             };
           }),
         ),
@@ -56,6 +59,7 @@ export class MongoDb {
               title: offer.title,
               description: offer.description,
               price: offer.price,
+              img: await this.firebase.GetPhoto(offer._id),
             };
           }),
         ),
@@ -79,6 +83,7 @@ export class MongoDb {
         title: offer_path.title,
         description: offer_path.description,
         price: offer_path.price,
+        img: await this.firebase.GetPhoto(offer_path._id),
       };
       return offer;
     } finally {
@@ -94,6 +99,7 @@ export class MongoDb {
         title: offer.title,
         description: offer.description,
         price: offer.price,
+        img: await this.firebase.GetPhoto(offer._id)
       });
     } finally {
       await this.disconnect();
@@ -108,6 +114,7 @@ export class MongoDb {
         title: work.title,
         description: work.description,
         url: work.url,
+        img: await this.firebase.GetPhoto(work._id)
       });
     } finally {
       await this.disconnect();
@@ -117,6 +124,7 @@ export class MongoDb {
   async DeleteOffer(_id: string) {
     try {
       await this.connect(this.DBOffers);
+      await this.firebase.DeletePhoto(_id);
       await OfferModule.deleteOne({_id: _id});
     } finally {
       await this.disconnect();
@@ -126,6 +134,7 @@ export class MongoDb {
   async DeleteWork(_id: string) {
     try {
       await this.connect(this.DBWorks);
+      await this.firebase.DeletePhoto(_id);
       await WorkModule.deleteOne({_id: _id});
     } finally {
       await this.disconnect();

@@ -109,7 +109,7 @@ const EditOffer: FC<EditWorkProps> = ({SetActivePopEdit, offer}) => {
                 className={style.add_img_block}
                 style={{
                   backgroundImage: `url(${
-                    Preview ? Preview : `http://localhost:5500/img/${Offer._id}`
+                    Preview ? Preview : Offer.img
                   })`,
                 }}></div>
             </label>
