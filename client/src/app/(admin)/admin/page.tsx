@@ -49,12 +49,12 @@ const page: FC = () => {
                 AdminService.DeleteWorks(_id).then(() => {
                     GetData();
                 });
-                
+
                 break;
             case "Offers":
                 AdminService.DeleteOffers(_id).then(() => {
                     GetData();
-                })
+                });
             default:
                 break;
         }
@@ -71,7 +71,9 @@ const page: FC = () => {
                 <nav className="menu">
                     <ul className={style.menu_list}>
                         <li onClick={() => ControlActivePop("Works")}>Works</li>
-                        <li onClick={() => ControlActivePop("Offers")}>Offers</li>
+                        <li onClick={() => ControlActivePop("Offers")}>
+                            Offers
+                        </li>
                         <li onClick={() => ControlActivePop("User")}>User</li>
                     </ul>
                 </nav>

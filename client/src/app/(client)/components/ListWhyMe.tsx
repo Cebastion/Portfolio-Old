@@ -1,7 +1,7 @@
-import React from 'react'
-import { whyMe } from "../../../API/whyMe"
-import style from '../main.module.scss'
-import { FC } from 'react'
+import React from "react";
+import { whyMe } from "../../../API/whyMe";
+import style from "../main.module.scss";
+import { FC } from "react";
 
 const ListWhyMe: FC = () => {
     return (
@@ -19,10 +19,10 @@ const ListWhyMe: FC = () => {
                             <span>{el.text}</span>
                         </div>
                     </div>
-                )
+                );
             })}
         </div>
-    )
-}
+    );
+};
 
-export default ListWhyMe
+export default ListWhyMe;

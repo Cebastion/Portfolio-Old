@@ -1,15 +1,28 @@
-import { works } from "../../../API/works"
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import style from '../main.module.scss'
+import { IWorks } from "@/app/(admin)/interface/work.interface"
+import { WorkService } from "../service/work.service"
 
 
 const ListWork: FC = () => {
-    const slicedWorks = works.slice(0, 2)
+    const [Works, SetWorks] = useState<IWorks>({ works: [] })
+
+    async function GetWorks() {
+        const workService = new WorkService()
+        const works = await workService.GetWorks()
+        SetWorks(works)
+    }
+
+    useEffect(() => {
+        GetWorks()
+    }, [])
+
+    const slicedWorks = Works.works.slice(0, 2)
     return (
         <div className={style.works__coloum}>
             {slicedWorks.map((work) => {
                 return (
-                    <div className={style.works__block} key={work.id}>
+                    <div className={style.works__block} key={work._id}>
                         <div className={style.works__img}>
                             <img src={work.img} alt="" />
                         </div>
@@ -18,10 +31,10 @@ const ListWork: FC = () => {
                                 <span>{work.title}</span>
                             </div>
                             <div className={style.works__text}>
-                                <span>{work.text}</span>
+                                <span>{work.description}</span>
                             </div>
                             <div className={style.works__link}>
-                                <a href={work.link}>{work.link}</a>
+                                <a href={work.url}>{work.url}</a>
                             </div>
                         </div>
                     </div>

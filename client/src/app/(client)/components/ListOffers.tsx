@@ -1,15 +1,27 @@
 import Link from 'next/link'
-import { offers } from "../../../API/offers"
 import style from '../SCSS/offers.module.scss'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { IOffers } from '@/app/(admin)/interface/offer.interface'
+import { OfferService } from '../service/offer.service'
 
 const ListOffers: FC = () => {
-    const slicedOffers = offers.slice(0, 2)
+    const [Offers, SetOffers] = useState<IOffers>({ offers: [] })
+
+    const GetData = async () => {
+        const offerService = new OfferService()
+        const offers: IOffers = await offerService.GetOffers()
+        SetOffers(offers)
+    }
+
+    useEffect(() => {
+        GetData()
+    })
+    const slicedOffers = Offers.offers.slice(0, 2)
     return (
         <div className={style.offers__coloum}>
             {slicedOffers.map((offer) => {
                 return (
-                    <div className={style.offers__block} key={offer.id}>
+                    <div className={style.offers__block} key={offer._id}>
                         <div className={style.offers__img}>
                             <img src={offer.img} alt="" />
                         </div>
@@ -33,7 +45,7 @@ const ListOffers: FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Link href={`/offer/${offer.id}`}>
+                            <Link href={`/offer/${offer._id}`}>
                                 <button className={style.offers__button}>
                                     VIEW
                                 </button>
