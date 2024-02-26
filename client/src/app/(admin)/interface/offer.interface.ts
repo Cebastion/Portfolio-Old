@@ -5,3 +5,7 @@ export interface IOffer {
   price: number;
   img: string;
 }
+
+export interface IOffers {
+  offers: IOffer[]
+}

@@ -25,8 +25,10 @@ app.get("/works", async (req: Request, res: Response) => {
     res.json(works);
 });
 
-app.get("/offer", (req: Request, res: Response) => {
-    res.send("Server is running");
+app.get("/offer/:_id", (req: Request, res: Response) => {
+    const _id = req.params._id;
+    const offer = db.GetOffer(_id);
+    res.json(offer);
 });
 
 app.get("/offers", async (req: Request, res: Response) => {
@@ -76,7 +78,7 @@ app.post("/delete_work/:_id", async (req: Request, res: Response) => {
     await db.DeleteWork(_id);
 });
 
-app.post("/delete_offer", async (req: Request, res: Response) => {
+app.post("/delete_offer/:_id", async (req: Request, res: Response) => {
     const _id = req.params._id;
     await db.DeleteOffer(_id);
 });
