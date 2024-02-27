@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import style from './main.module.scss'
 import ListOffers from './components/ListOffers'
+import SwiperList from './components/SwiperList'
 
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
             <h2>My Skills</h2>
           </div>
           <div className={style.my_skills__row}>
+            <SwiperList/>
             <img src="/img/html.webp" alt="" />
             <img src="/img/css.webp" alt="" />
             <img src="/img/js.webp" alt="" />
