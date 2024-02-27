@@ -1,6 +1,5 @@
 import ListWhyMe from './components/ListWhyMe'
 import ListWork from './components/ListWork'
-import Image from 'next/image'
 import Link from 'next/link'
 import style from './main.module.scss'
 import ListOffers from './components/ListOffers'
@@ -31,12 +30,6 @@ export default function Home() {
           </div>
           <div className={style.my_skills__row}>
             <SwiperList/>
-            <img src="/img/html.webp" alt="" />
-            <img src="/img/css.webp" alt="" />
-            <img src="/img/js.webp" alt="" />
-            <img className={style.react} src="/img/react.webp" alt="" />
-            <img src="/img/nodejs.webp" alt="" />
-            <img src="/img/mysql.webp" alt="" />
           </div>
         </div>
         <div className={style.contant__why_me}>
