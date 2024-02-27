@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { FC } from 'react'
-import style from './main.module.scss'
+import style from './SCSS/error.module.scss'
 
 const ErrorPage: FC = () => {
   return (

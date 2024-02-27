@@ -5,6 +5,7 @@ import { OfferService } from '../../service/offer.service'
 import { IOffer } from '@/app/(admin)/interface/offer.interface'
 import Image from 'next/image'
 import Link from 'next/link'
+import style from '../../SCSS/offer.module.scss'
 
 const page: FC = () => {
   const searchParams = useSearchParams()
@@ -35,26 +36,26 @@ const page: FC = () => {
       <div className="contant__conatiner">
         <div className="content__offer">
             <div className="offer__block">
-                <div className="offer__title">
+                <div className={style.offer__title}>
                   <h2>{Offer.title}</h2>
                 </div>
-                <div className="offer__img">
+                <div className={style.offer__img}>
                   <Image src={Offer.img} alt=""/>
                 </div>
-                <div className="offer__description">
-                  <div className="description__title">
+                <div className={style.offer__description}>
+                  <div className={style.description__title}>
                     <span>What you deliver with this Offer</span>
                   </div>
-                  <div className="description__text">
+                  <div className={style.description__text}>
                     <span>{Offer.description}</span>
                   </div>
                 </div>
-                <div className="offer__order">
-                  <div className="order__price">
+                <div className={style.offer__order}>
+                  <div className={style.order__price}>
                     <span>{Offer.price}$</span>
                   </div>
                   <Link href="/contact">
-                    <button className="offer__button">Order</button>
+                    <button className={style.offer__button}>Order</button>
                   </Link>
                 </div>
             </div>

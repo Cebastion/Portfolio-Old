@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import style from '../SCSS/offers.module.scss'
 import { FC, useEffect, useState } from 'react'

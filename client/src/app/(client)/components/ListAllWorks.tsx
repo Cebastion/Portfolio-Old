@@ -1,3 +1,4 @@
+'use client'
 import { IWorks } from "@/app/(admin)/interface/work.interface"
 import style from './main.module.scss'
 import { FC, useEffect, useState } from 'react'

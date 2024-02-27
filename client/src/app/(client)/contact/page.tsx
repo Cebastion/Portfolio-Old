@@ -1,7 +1,9 @@
+'use client'
 import { NextPage } from 'next'
 import { useState } from 'react'
 import { ILetter } from '../interface/letter.interface'
 import axios from 'axios'
+import style from '../SCSS/contact.module.scss'
 
 interface Props {}
 
@@ -17,13 +19,13 @@ const Page: NextPage<Props> = ({}) => {
     }
 
     return (
-    <main className="content">
-        <div className="contant_container">
-            <div className="content_form-email">
-                <div className="email_title">
+    <main className={style.content}>
+        <div className={style.contant__container}>
+            <div className={style.content__form_email}>
+                <div className={style.email__title}>
                     <h2>Send me an offer!</h2>
                 </div>
-                <form action="" className="email_form" onSubmit={SendEmail}>
+                <form action="" className={style.email__form} onSubmit={SendEmail}>
                     <label htmlFor="nameproject">Name project:</label>
                     <input type="text" name='nameproject' value={Letter.nameproject} onChange={(e) => SetLetter({...Letter, nameproject: e.target.value})}/>
                     <label htmlFor="email">Email:</label>

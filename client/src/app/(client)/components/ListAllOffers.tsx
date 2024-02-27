@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import { FC, useEffect, useState } from 'react'
 import { IOffers } from '@/app/(admin)/interface/offer.interface.js'
