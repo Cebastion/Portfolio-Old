@@ -95,6 +95,20 @@ app.post("/sendEmail", (req: Request, res: Response) => {
     res.send(result);
 });
 
+app.post('/save_photo/:_id', (req: Request, res: Response) => {
+    const _id = req.params._id;
+    const file = req.file;
+    if (file) {
+        firebase.SavePhoto(file, _id);
+    }
+});
+
+app.get('/photo/:_id', (req: Request, res: Response) => {
+    const _id = req.params._id;
+    const photo = firebase.GetPhoto(_id);
+    res.json(photo);
+});
+
 app.listen(5500, () => {
     console.log(`http//:localhost:${5500}`);
 });
