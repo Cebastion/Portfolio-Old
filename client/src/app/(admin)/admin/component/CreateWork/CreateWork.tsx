@@ -51,6 +51,7 @@ const CreateWork: FC<CreateWorkProps> = ({SetActivePopCreate}) => {
             SetActivePopCreate(false);
             SetWork(work);
             SetPreview('');
+            window.location.reload()
           });
       }
     } catch (error) {

@@ -2,15 +2,13 @@
 import {ChangeEvent, FC, useState} from 'react';
 import style from './CreateWork.module.scss';
 import axios from 'axios';
-import {IOffer} from '@/app/(admin)/interface/offer.interface';
+import {randomBytes} from 'crypto';
 
-interface EditWorkProps {
-  offer: IOffer;
-  SetActivePopEdit: React.Dispatch<React.SetStateAction<boolean>>;
+interface CreateWorkProps {
+  SetActivePopCreate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EditOffer: FC<EditWorkProps> = ({SetActivePopEdit, offer}) => {
-  const [Offer, SetOffer] = useState<IOffer>(offer);
+const AddPhoto: FC<CreateWorkProps> = ({SetActivePopCreate}) => {
   const [Preview, SetPreview] = useState<string>('');
   const [Photo, SetPhoto] = useState<File>();
 
@@ -22,37 +20,23 @@ const EditOffer: FC<EditWorkProps> = ({SetActivePopEdit, offer}) => {
   };
 
   const CloseActivePopCreate = () => {
-    SetActivePopEdit(false);
+    SetActivePopCreate(false);
     SetPreview('');
   };
 
-  const CreateWork = () => {
+  const CreateWork = async () => {
     try {
       if (Photo) {
-        const formData = new FormData();
-        formData.append('img', Photo);
-        formData.append('title', Offer.title);
-        formData.append('description', Offer.description);
-        formData.append('price', Offer.price.toString());
-
-        axios
-          .post(`http://localhost:5500/edit_work/?_id=${Offer._id}`, formData)
+        const _id = randomBytes(12).toString('hex');
+        const formdata = new FormData();
+        formdata.append('img', Photo);
+        await axios
+          .post(`http://localhost:5500/save_photo/${_id}`, formdata)
           .then(res => {
-            SetActivePopEdit(false);
+            SetActivePopCreate(false);
             SetPreview('');
             window.location.reload()
           });
-      } else {
-        const formData = new FormData();
-        formData.append('title', Offer.title);
-        formData.append('description', Offer.description);
-        formData.append('url', Offer.price.toString());
-
-        axios.post(`http://localhost:5500/edit_work`, formData).then(res => {
-          SetActivePopEdit(false);
-          SetPreview('');
-          window.location.reload()
-        });
       }
     } catch (error) {
       console.log(error);
@@ -93,9 +77,9 @@ const EditOffer: FC<EditWorkProps> = ({SetActivePopEdit, offer}) => {
               />
             </svg>
           </button>
-          <h2 className={style.header__title}>Edit Work</h2>
+          <h2 className={style.header__title}>Add Skill</h2>
           <button className={style.header__create} onClick={CreateWork}>
-            Save
+            Add
           </button>
         </header>
         <main className={style.block__form}>
@@ -109,38 +93,8 @@ const EditOffer: FC<EditWorkProps> = ({SetActivePopEdit, offer}) => {
               />
               <div
                 className={style.add_img_block}
-                style={{
-                  backgroundImage: `url(${
-                    Preview ? Preview : Offer.img
-                  })`,
-                }}></div>
+                style={{backgroundImage: `url(${Preview})`}}></div>
             </label>
-          </div>
-          <div className={style.form__title}>
-            <label htmlFor="">Name:</label>
-            <input
-              type="text"
-              value={Offer.title}
-              onChange={e => SetOffer({...Offer, title: e.target.value})}
-            />
-          </div>
-          <div className={style.form__desc}>
-            <label htmlFor="">Description:</label>
-            <textarea
-              value={Offer.description}
-              onChange={e =>
-                SetOffer({...Offer, description: e.target.value})
-              }></textarea>
-          </div>
-          <div className={style.form__link}>
-            <label htmlFor="">Price:</label>
-            <input
-              type="text"
-              value={Offer.price}
-              onChange={e =>
-                SetOffer({...Offer, price: parseInt(e.target.value)})
-              }
-            />
           </div>
         </main>
       </div>
@@ -148,4 +102,4 @@ const EditOffer: FC<EditWorkProps> = ({SetActivePopEdit, offer}) => {
   );
 };
 
-export default EditOffer;
+export default AddPhoto;

@@ -8,6 +8,7 @@ import EditWork from "./component/EditWork/EditWork";
 import { IOffers } from "../interface/offer.interface";
 import EditOffer from "./component/EditOffer/EditOffer";
 import CreateOffer from "./component/CreateOffer/CreateOffer";
+import SwiperList from "@/app/(client)/components/SwiperList";
 
 const page: FC = () => {
     const [ActivePop, SetActivePop] = useState("Works");
@@ -245,6 +246,26 @@ const page: FC = () => {
                                     </nav>
                                 </div>
                             ))}
+                        </div>
+                    </div>
+                )}
+                {ActivePop === "User" && (
+                    <div className="content__block">
+                        <nav className="block__menu">
+                            <div className="block__title">
+                                <h2>User</h2>
+                            </div>
+                            <div className="block__button__add">
+                                Add Photo
+                            </div>
+                        </nav>
+                        {ActivePopCreate && (
+                            <CreateOffer
+                                SetActivePopCreate={SetActivePopCreate}
+                            />
+                        )}
+                        <div className="previw__list">
+                            <SwiperList/>
                         </div>
                     </div>
                 )}

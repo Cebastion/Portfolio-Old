@@ -53,6 +53,7 @@ const CreateOffer: FC<CreateWorkProps> = ({SetActivePopCreate}) => {
             SetActivePopCreate(false);
             SetOffer(offer);
             SetPreview('');
+            window.location.reload()
           });
       }
     } catch (error) {

@@ -103,6 +103,11 @@ app.post('/save_photo/:_id', (req: Request, res: Response) => {
     }
 });
 
+app.post('/delete_photo/:_id', (req: Request, res: Response) => {
+    const _id = req.params._id;
+    firebase.DeletePhoto(_id);
+});
+
 app.get('/photo/:_id', (req: Request, res: Response) => {
     const _id = req.params._id;
     const photo = firebase.GetPhoto(_id);

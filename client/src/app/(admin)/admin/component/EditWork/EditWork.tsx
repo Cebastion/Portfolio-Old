@@ -40,6 +40,7 @@ const EditWork: FC<EditWorkProps> = ({SetActivePopEdit, work}) => {
           .then(res => {
             SetActivePopEdit(false);
             SetPreview('');
+            window.location.reload()
           });
       } else {
         const formData = new FormData();
@@ -50,6 +51,7 @@ const EditWork: FC<EditWorkProps> = ({SetActivePopEdit, work}) => {
         axios.post(`http://localhost:5500/edit_work`, formData).then(res => {
           SetActivePopEdit(false);
           SetPreview('');
+          window.location.reload()
         });
       }
     } catch (error) {
