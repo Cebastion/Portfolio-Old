@@ -108,8 +108,8 @@ app.post('/delete_photo/:_id', (req: Request, res: Response) => {
     firebase.DeletePhotoSkill(_id);
 });
 
-app.get('/photos', (req: Request, res: Response) => {
-    const photo = firebase.getAllPhotoURLs();
+app.get('/photos', async (req: Request, res: Response) => {
+    const photo = await firebase.getAllPhotoURLs();
     res.json(photo);
 });
 

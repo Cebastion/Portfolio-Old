@@ -7,16 +7,14 @@ import {OfferModule} from '../module/offer.module';
 import { FireBaseService } from './firebase.service';
 
 export class MongoDb {
-  private DBOffers: string;
-  private DBWorks: string;
+  private DB: string;
   private firebase = new FireBaseService()
   constructor(private readonly configService: IConfigService) {
-    this.DBOffers = this.configService.get('URL_MONGO_OFFERS');
-    this.DBWorks = this.configService.get('URL_MONGO_WORKS');
+    this.DB = this.configService.get('URL_MONGO');
   }
 
-  private async connect(db: string) {
-    await mongoose.connect(db);
+  private async connect() {
+    await mongoose.connect(this.DB);
   }
 
   private async disconnect() {
@@ -25,7 +23,7 @@ export class MongoDb {
 
   async GetWorks() {
     try {
-      await this.connect(this.DBWorks);
+      await this.connect();
       const works = await WorkModule.find();
       const work_all: IWorks = {
         works: await Promise.all(
@@ -49,7 +47,7 @@ export class MongoDb {
 
   async GetOffers() {
     try {
-      await this.connect(this.DBOffers);
+      await this.connect();
       const offers = await OfferModule.find();
       const offer_all: IOffers = {
         offers: await Promise.all(
@@ -73,7 +71,7 @@ export class MongoDb {
 
   async GetOffer(_id: string) {
     try {
-      await this.connect(this.DBOffers);
+      await this.connect();
       const offer_path = await OfferModule.findOne({_id: _id});
       if (offer_path === null) {
         throw new Error('Offer not found');
@@ -93,7 +91,7 @@ export class MongoDb {
 
   async AddOffer(offer: IOffer) {
     try {
-      await this.connect(this.DBOffers);
+      await this.connect();
       await OfferModule.create({
         _id: offer._id,
         title: offer.title,
@@ -108,7 +106,7 @@ export class MongoDb {
 
   async AddWork(work: IWork) {
     try {
-      await this.connect(this.DBWorks);
+      await this.connect();
       await WorkModule.create({
         _id: work._id,
         title: work.title,
@@ -123,7 +121,7 @@ export class MongoDb {
 
   async DeleteOffer(_id: string) {
     try {
-      await this.connect(this.DBOffers);
+      await this.connect();
       await this.firebase.DeletePhoto(_id);
       await OfferModule.deleteOne({_id: _id});
     } finally {
@@ -133,7 +131,7 @@ export class MongoDb {
 
   async DeleteWork(_id: string) {
     try {
-      await this.connect(this.DBWorks);
+      await this.connect();
       await this.firebase.DeletePhoto(_id);
       await WorkModule.deleteOne({_id: _id});
     } finally {
@@ -143,7 +141,7 @@ export class MongoDb {
 
   async UpdateOffer(offer: IOffer) {
     try {
-      await this.connect(this.DBOffers);
+      await this.connect();
       OfferModule.updateOne(
         {_id: offer._id},
         {
@@ -159,7 +157,7 @@ export class MongoDb {
 
   async UpdateWork(work: IWork) {
     try {
-      await this.connect(this.DBWorks);
+      await this.connect();
       WorkModule.updateOne(
         {_id: work._id},
         {title: work.title, description: work.description, url: work.url},

@@ -5,12 +5,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-interface Image {
+interface ImageList {
     img: string[];
 }
 
 const SwiperList = () => {
-    const [Photos, SetPhotos] = useState<Image>();
+    const [Photos, SetPhotos] = useState<ImageList>({ img: [] });
 
     const getPhotos = async () => {
         const { data } = await axios.get("http://localhost:5500/photos");
@@ -23,7 +23,7 @@ const SwiperList = () => {
 
     return (
         <Swiper spaceBetween={30} slidesPerView={3} autoplay speed={2000}>
-            {Photos?.img.map((img) => {
+            {Photos.img.map((img) => {
                 return (
                     <SwiperSlide>
                         <Image src={img} alt="skill" />
