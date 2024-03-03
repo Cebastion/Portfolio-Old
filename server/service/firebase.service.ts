@@ -21,52 +21,52 @@ export class FireBaseService {
     private FB = initializeApp(this.firebaseConfig);
     private storage = getStorage(this.FB);
 
-    SavePhoto(file: Express.Multer.File, _id: string) {
+    async SavePhoto(file: Express.Multer.File, _id: string) {
         const photo = new Blob([file.buffer]);
         const filename = `${_id}.webp`;
         const metadata = {
             contentType: file.mimetype,
         };
         const storageRef = ref(this.storage, filename);
-        uploadBytes(storageRef, photo, metadata);
+        await uploadBytes(storageRef, photo, metadata);
     }
 
-    UpdatePhoto(file: Express.Multer.File, _id: string) {
+    async UpdatePhoto(file: Express.Multer.File, _id: string) {
         const photo = new Blob([file.buffer]);
         const filename = `${_id}.webp`;
         const metadata = {
             contentType: file.mimetype,
         };
         const storageRef = ref(this.storage, filename);
-        uploadBytes(storageRef, photo, metadata);
+        await uploadBytes(storageRef, photo, metadata);
     }
 
-    DeletePhoto(_id: string) {
+    async DeletePhoto(_id: string) {
         const filename = `${_id}.webp`;
         const photoRef = ref(this.storage, filename);
-        deleteObject(photoRef);
+        await deleteObject(photoRef);
     }
 
-    GetPhoto(_id: string) {
+    async GetPhoto(_id: string) {
         const filename = `${_id}.webp`;
         const photoRef = ref(this.storage, filename);
-        return getDownloadURL(photoRef);
+        return await getDownloadURL(photoRef);
     }
 
-    SavePhotoSkill(file: Express.Multer.File, _id: string) {
+    async SavePhotoSkill(file: Express.Multer.File, _id: string) {
         const photo = new Blob([file.buffer]);
         const filename = `skills/${_id}.webp`;
         const metadata = {
             contentType: file.mimetype,
         };
         const storageRef = ref(this.storage, filename);
-        uploadBytes(storageRef, photo, metadata);
+        await uploadBytes(storageRef, photo, metadata);
     }
 
-    DeletePhotoSkill(_id: string) {
+    async DeletePhotoSkill(_id: string) {
         const filename = `skills/${_id}.webp`;
         const photoRef = ref(this.storage, filename);
-        deleteObject(photoRef);
+        await deleteObject(photoRef);
     }
 
     async getAllPhotoURLs() {

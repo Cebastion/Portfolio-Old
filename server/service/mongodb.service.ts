@@ -13,17 +13,17 @@ export class MongoDb {
     this.DB = this.configService.get('URL_MONGO');
   }
 
-  private async connect() {
+  async connect() {
     await mongoose.connect(this.DB);
   }
 
-  private async disconnect() {
+  async disconnect() {
     await mongoose.disconnect();
   }
 
   async GetWorks() {
     try {
-      await this.connect();
+      
       const works = await WorkModule.find();
       const work_all: IWorks = {
         works: await Promise.all(
@@ -41,13 +41,13 @@ export class MongoDb {
 
       return work_all;
     } finally {
-      await this.disconnect();
+      
     }
   }
 
   async GetOffers() {
     try {
-      await this.connect();
+      
       const offers = await OfferModule.find();
       const offer_all: IOffers = {
         offers: await Promise.all(
@@ -65,13 +65,13 @@ export class MongoDb {
 
       return offer_all;
     } finally {
-      await this.disconnect();
+      
     }
   }
 
   async GetOffer(_id: string) {
     try {
-      await this.connect();
+      
       const offer_path = await OfferModule.findOne({_id: _id});
       if (offer_path === null) {
         throw new Error('Offer not found');
@@ -85,13 +85,13 @@ export class MongoDb {
       };
       return offer;
     } finally {
-      await this.disconnect();
+      
     }
   }
 
   async AddOffer(offer: IOffer) {
     try {
-      await this.connect();
+      
       await OfferModule.create({
         _id: offer._id,
         title: offer.title,
@@ -100,13 +100,13 @@ export class MongoDb {
         img: await this.firebase.GetPhoto(offer._id)
       });
     } finally {
-      await this.disconnect();
+      
     }
   }
 
   async AddWork(work: IWork) {
     try {
-      await this.connect();
+      
       await WorkModule.create({
         _id: work._id,
         title: work.title,
@@ -115,34 +115,34 @@ export class MongoDb {
         img: await this.firebase.GetPhoto(work._id)
       });
     } finally {
-      await this.disconnect();
+      
     }
   }
 
   async DeleteOffer(_id: string) {
     try {
-      await this.connect();
+      
       await this.firebase.DeletePhoto(_id);
       await OfferModule.deleteOne({_id: _id});
     } finally {
-      await this.disconnect();
+      
     }
   }
 
   async DeleteWork(_id: string) {
     try {
-      await this.connect();
+      
       await this.firebase.DeletePhoto(_id);
       await WorkModule.deleteOne({_id: _id});
     } finally {
-      await this.disconnect();
+      
     }
   }
 
   async UpdateOffer(offer: IOffer) {
     try {
-      await this.connect();
-      OfferModule.updateOne(
+      
+      await OfferModule.updateOne(
         {_id: offer._id},
         {
           title: offer.title,
@@ -151,19 +151,19 @@ export class MongoDb {
         },
       );
     } finally {
-      await this.disconnect();
+      
     }
   }
 
   async UpdateWork(work: IWork) {
     try {
-      await this.connect();
-      WorkModule.updateOne(
+      
+      await WorkModule.updateOne(
         {_id: work._id},
         {title: work.title, description: work.description, url: work.url},
       );
     } finally {
-      await this.disconnect();
+      
     }
   }
 }

@@ -22,25 +22,25 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/works", async (req: Request, res: Response) => {
     const works = await db.GetWorks();
-    res.json(works);
+    res.json(works).sendStatus(200);
 });
 
-app.get("/offer/:_id", (req: Request, res: Response) => {
+app.get("/offer/:_id", async (req: Request, res: Response) => {
     const _id = req.params._id;
-    const offer = db.GetOffer(_id);
-    res.json(offer);
+    const offer = await db.GetOffer(_id);
+    res.json(offer).sendStatus(200);
 });
 
 app.get("/offers", async (req: Request, res: Response) => {
     const offer = await db.GetOffers();
-    res.json(offer);
+    res.json(offer).sendStatus(200);
 });
 
 app.post("/add_work", upload.single("img"), async (req: Request, res: Response) => {
         const data: IWork = req.body;
         const file = req.file;
         if (file) {
-            firebase.SavePhoto(file, data._id);
+            await firebase.SavePhoto(file, data._id);
             await db.AddWork(data);
         }
     }
@@ -50,26 +50,26 @@ app.post("/add_offer", async (req: Request, res: Response) => {
     const data: IOffer = req.body;
     const file = req.file
     if (file) {
-        firebase.SavePhoto(file, data._id);
+        await firebase.SavePhoto(file, data._id);
         await db.AddOffer(data);
     }
 });
 
-app.post("/edit_work", upload.single("img"), (req: Request, res: Response) => {
+app.post("/edit_work", upload.single("img"), async (req: Request, res: Response) => {
     const data = req.body;
     const file = req.file;
     if (file) {
-        firebase.UpdatePhoto(file, data._id);
-        db.UpdateWork(data);
+        await firebase.UpdatePhoto(file, data._id);
+        await db.UpdateWork(data);
     }
 });
 
-app.post("/edit_offer", (req: Request, res: Response) => {
+app.post("/edit_offer", async (req: Request, res: Response) => {
     const data = req.body;
     const file = req.file;
     if (file) {
-        firebase.UpdatePhoto(file, data._id);
-        db.UpdateOffer(data);
+        await firebase.UpdatePhoto(file, data._id);
+        await db.UpdateOffer(data);
     }
 });
 
@@ -92,27 +92,32 @@ app.post("/sendEmail", (req: Request, res: Response) => {
         new ConfigService()
     );
     const result = mailerService.sendEmail();
-    res.send(result);
+    res.send(result).sendStatus(200);
 });
 
-app.post('/save_photo/:_id', (req: Request, res: Response) => {
+app.post('/save_photo/:_id', async (req: Request, res: Response) => {
     const _id = req.params._id;
     const file = req.file;
     if (file) {
-        firebase.SavePhoto(file, _id);
+        await firebase.SavePhoto(file, _id);
     }
 });
 
-app.post('/delete_photo/:_id', (req: Request, res: Response) => {
+app.post('/delete_photo/:_id', async (req: Request, res: Response) => {
     const _id = req.params._id;
-    firebase.DeletePhotoSkill(_id);
+    await firebase.DeletePhotoSkill(_id);
 });
 
 app.get('/photos', async (req: Request, res: Response) => {
     const photo = await firebase.getAllPhotoURLs();
-    res.json(photo);
+    res.json(photo).sendStatus(200);
 });
 
-app.listen(5500, () => {
+app.listen(5500, async () => {
+    await db.connect()
     console.log(`http//:localhost:${5500}`);
 });
+
+app.on("exit", async () => {
+    await db.disconnect()
+})
