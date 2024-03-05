@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { FC, useEffect, useState } from 'react'
 import { IOffers } from '@/app/(admin)/interface/offer.interface.js'
-import { OfferService } from '../service/offer.service.js'
+import { OfferService } from '../service/offer.service.ts'
 
 const ListAllOffers: FC = () => {
     const [Offers, SetOffers] = useState<IOffers>({ offers: [] })

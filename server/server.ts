@@ -22,18 +22,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/works", async (req: Request, res: Response) => {
     const works = await db.GetWorks();
-    res.json(works).sendStatus(200);
+    res.json(works)
 });
 
 app.get("/offer/:_id", async (req: Request, res: Response) => {
     const _id = req.params._id;
     const offer = await db.GetOffer(_id);
-    res.json(offer).sendStatus(200);
+    res.json(offer)
 });
 
 app.get("/offers", async (req: Request, res: Response) => {
     const offer = await db.GetOffers();
-    res.json(offer).sendStatus(200);
+    res.json(offer)
 });
 
 app.post("/add_work", upload.single("img"), async (req: Request, res: Response) => {
@@ -92,7 +92,7 @@ app.post("/sendEmail", (req: Request, res: Response) => {
         new ConfigService()
     );
     const result = mailerService.sendEmail();
-    res.send(result).sendStatus(200);
+    res.send(result)
 });
 
 app.post('/save_photo/:_id', async (req: Request, res: Response) => {
@@ -110,7 +110,7 @@ app.post('/delete_photo/:_id', async (req: Request, res: Response) => {
 
 app.get('/photos', async (req: Request, res: Response) => {
     const photo = await firebase.getAllPhotoURLs();
-    res.json(photo).sendStatus(200);
+    res.json(photo)
 });
 
 app.listen(5500, async () => {
