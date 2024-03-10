@@ -174,7 +174,7 @@ const page: FC = () => {
                                 Add Offer
                             </button>
                         </nav>
-                        {ActivePopCreate && (
+                        {ActivePopCreate && ActivePop === "Offers" && (
                             <CreateOffer
                                 SetActivePopCreate={SetActivePopCreate}
                             />
