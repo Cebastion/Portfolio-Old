@@ -9,6 +9,7 @@ import { IOffers } from "../interface/offer.interface";
 import EditOffer from "./component/EditOffer/EditOffer";
 import CreateOffer from "./component/CreateOffer/CreateOffer";
 import SwiperList from "@/app/(client)/components/SwiperList";
+import AddPhoto from "./component/AddPhoto/AddPhoto";
 
 const page: FC = () => {
     const [ActivePop, SetActivePop] = useState("Works");
@@ -91,7 +92,7 @@ const page: FC = () => {
                                 Add Work
                             </button>
                         </nav>
-                        {ActivePopCreate && (
+                        {ActivePopCreate && ActivePop === "Works" && (
                             <CreateWork
                                 SetActivePopCreate={SetActivePopCreate}
                             />
@@ -170,7 +171,7 @@ const page: FC = () => {
                     <div className="content__block">
                         <nav className="block__menu">
                             <h2 className="block__title">Offers</h2>
-                            <button className="block__button__add">
+                            <button className="block__button__add" onClick={ControlActivePopCreate}>
                                 Add Offer
                             </button>
                         </nav>
@@ -255,12 +256,12 @@ const page: FC = () => {
                             <div className="block__title">
                                 <h2>User</h2>
                             </div>
-                            <div className="block__button__add">
+                            <div className="block__button__add" onClick={ControlActivePopCreate}>
                                 Add Photo
                             </div>
                         </nav>
-                        {ActivePopCreate && (
-                            <CreateOffer
+                        {ActivePopCreate && ActivePop === "User" && (
+                            <AddPhoto
                                 SetActivePopCreate={SetActivePopCreate}
                             />
                         )}
