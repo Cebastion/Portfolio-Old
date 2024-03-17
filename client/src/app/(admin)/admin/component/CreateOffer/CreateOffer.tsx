@@ -8,10 +8,10 @@ import {randomBytes} from 'crypto';
 import {IOffer} from '../../../interface/offer.interface';
 
 interface CreateWorkProps {
-  SetActivePopCreate: React.Dispatch<React.SetStateAction<boolean>>;
+  SetActivePopCreateOffer: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CreateOffer: FC<CreateWorkProps> = ({SetActivePopCreate}) => {
+const CreateOffer: FC<CreateWorkProps> = ({SetActivePopCreateOffer}) => {
   const offer: IOffer = {
     _id: '',
     title: '',
@@ -31,7 +31,7 @@ const CreateOffer: FC<CreateWorkProps> = ({SetActivePopCreate}) => {
   };
 
   const CloseActivePopCreate = () => {
-    SetActivePopCreate(false);
+    SetActivePopCreateOffer(false);
     SetOffer(offer);
     SetPreview('');
   };
@@ -48,9 +48,9 @@ const CreateOffer: FC<CreateWorkProps> = ({SetActivePopCreate}) => {
         formData.append('price', String(Offer.price));
 
         axios
-          .post(`http://localhost:5500/add_work/?_id=${_id}`, formData)
+          .post(`http://localhost:5500/add_offer/?_id=${_id}`, formData)
           .then(res => {
-            SetActivePopCreate(false);
+            SetActivePopCreateOffer(false);
             SetOffer(offer);
             SetPreview('');
             window.location.reload()
