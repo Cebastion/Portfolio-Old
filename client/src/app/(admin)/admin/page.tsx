@@ -1,19 +1,21 @@
 "use client";
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import style from "./admin.module.scss";
-import CreateWork from "./component/CreateWork/CreateWork";
 import { AdminService } from "../service/admin.service";
 import { IWork, IWorks } from "../interface/work.interface";
-import EditWork from "./component/EditWork/EditWork";
-import { IOffers } from "../interface/offer.interface";
-import EditOffer from "./component/EditOffer/EditOffer";
-import CreateOffer from "./component/CreateOffer/CreateOffer";
+import { IOffer, IOffers } from "../interface/offer.interface";
 import SwiperList from "@/app/(client)/components/SwiperList";
-import AddPhoto from "./component/AddPhoto/AddPhoto";
 import axios from "axios";
 import { randomBytes } from "crypto";
 
 const page: FC = () => {
+    const offer: IOffer = {
+        _id: "",
+        title: "",
+        description: "",
+        price: 0,
+        img: "",
+    };
     const work: IWork = {
         _id: "",
         title: "",
@@ -22,6 +24,9 @@ const page: FC = () => {
         img: "",
     };
     const [Work, SetWork] = useState<IWork>(work);
+    const [Offer, SetOffer] = useState<IOffer>(offer);
+    const [WorkEdit, SetWorkEdit] = useState<IWork>();
+    const [OfferEdit, SetOfferEdit] = useState<IOffer>();
     const [Preview, SetPreview] = useState<string>("");
     const [Photo, SetPhoto] = useState<File>();
     const [ActivePop, SetActivePop] = useState("Works");
@@ -94,6 +99,129 @@ const page: FC = () => {
                             SetPreview("");
                             window.location.reload();
                         }
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const EditWork = () => {
+        try {
+            if (Photo) {
+                const formData = new FormData();
+                formData.append("img", Photo);
+                formData.append("title", Work.title);
+                formData.append("description", Work.description);
+                formData.append("url", Work.url);
+
+                axios
+                    .post(
+                        `http://localhost:5500/edit_work/?_id=${Work._id}`,
+                        formData
+                    )
+                    .then((res) => {
+                        SetActivePopEdit(false);
+                        SetPreview("");
+                        window.location.reload();
+                    });
+            } else {
+                const formData = new FormData();
+                formData.append("title", Work.title);
+                formData.append("description", Work.description);
+                formData.append("url", Work.url);
+
+                axios
+                    .post(`http://localhost:5500/edit_work`, formData)
+                    .then((res) => {
+                        SetActivePopEdit(false);
+                        SetPreview("");
+                        window.location.reload();
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const CreateOffer = () => {
+        try {
+            if (Photo) {
+                const _id = randomBytes(12).toString("hex");
+                const formData = new FormData();
+                formData.append("img", Photo);
+                formData.append("_id", _id);
+                formData.append("title", Offer.title);
+                formData.append("description", Offer.description);
+                formData.append("price", String(Offer.price));
+
+                axios
+                    .post(
+                        `http://localhost:5500/add_offer/?_id=${_id}`,
+                        formData
+                    )
+                    .then((res) => {
+                        SetActivePopCreateOffer(false);
+                        SetOffer(offer);
+                        SetPreview("");
+                        window.location.reload();
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const EditOffer = () => {
+        try {
+            if (Photo) {
+                const formData = new FormData();
+                formData.append("img", Photo);
+                formData.append("title", Offer.title);
+                formData.append("description", Offer.description);
+                formData.append("price", Offer.price.toString());
+
+                axios
+                    .post(
+                        `http://localhost:5500/edit_work/?_id=${Offer._id}`,
+                        formData
+                    )
+                    .then((res) => {
+                        SetActivePopEdit(false);
+                        SetPreview("");
+                        window.location.reload();
+                    });
+            } else {
+                const formData = new FormData();
+                formData.append("title", Offer.title);
+                formData.append("description", Offer.description);
+                formData.append("url", Offer.price.toString());
+
+                axios
+                    .post(`http://localhost:5500/edit_work`, formData)
+                    .then((res) => {
+                        SetActivePopEdit(false);
+                        SetPreview("");
+                        window.location.reload();
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const SavePhoto = async () => {
+        try {
+            if (Photo) {
+                const _id = randomBytes(12).toString("hex");
+                const formdata = new FormData();
+                formdata.append("img", Photo);
+                await axios
+                    .post(`http://localhost:5500/save_photo/${_id}`, formdata)
+                    .then((res) => {
+                        SetActivePopCreate(false);
+                        SetPreview("");
+                        window.location.reload();
                     });
             }
         } catch (error) {
@@ -315,12 +443,190 @@ const page: FC = () => {
                                             </svg>
                                         </button>
                                         {ActivePopEdit && (
-                                            <EditWork
-                                                SetActivePopEdit={
-                                                    SetActivePopEdit
-                                                }
-                                                work={work}
-                                            />
+                                            <>
+                                                <div
+                                                    className={style.blur}
+                                                    onClick={
+                                                        CloseActivePopCreate
+                                                    }
+                                                ></div>
+                                                <div
+                                                    className={
+                                                        style.create__block
+                                                    }
+                                                    onClick={(e) =>
+                                                        e.stopPropagation()
+                                                    }
+                                                >
+                                                    <header
+                                                        className={
+                                                            style.block__header
+                                                        }
+                                                    >
+                                                        <button
+                                                            className={
+                                                                style.header__exit
+                                                            }
+                                                            onClick={
+                                                                CloseActivePopCreate
+                                                            }
+                                                        >
+                                                            <svg
+                                                                width="14.510254"
+                                                                height="14.537842"
+                                                                viewBox="0 0 14.5103 14.5378"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <desc>
+                                                                    Created with
+                                                                    Pixso.
+                                                                </desc>
+                                                                <defs />
+                                                                <path
+                                                                    id="Vector"
+                                                                    d="M13.2551 1.25513L1.25513 13.2827"
+                                                                    stroke="#9E9E9E"
+                                                                    stroke-opacity="1.000000"
+                                                                    stroke-width="2.500000"
+                                                                    stroke-linejoin="round"
+                                                                    stroke-linecap="round"
+                                                                />
+                                                                <path
+                                                                    id="Vector"
+                                                                    d="M1.25513 1.25513L13.2551 13.2827"
+                                                                    stroke="#9E9E9E"
+                                                                    stroke-opacity="1.000000"
+                                                                    stroke-width="2.500000"
+                                                                    stroke-linejoin="round"
+                                                                    stroke-linecap="round"
+                                                                />
+                                                            </svg>
+                                                        </button>
+                                                        <h2
+                                                            className={
+                                                                style.header__title
+                                                            }
+                                                        >
+                                                            Edit Work
+                                                        </h2>
+                                                        <button
+                                                            className={
+                                                                style.header__create
+                                                            }
+                                                            onClick={EditWork}
+                                                        >
+                                                            Save
+                                                        </button>
+                                                    </header>
+                                                    <main
+                                                        className={
+                                                            style.block__form
+                                                        }
+                                                    >
+                                                        <div
+                                                            className={
+                                                                style.form__img
+                                                            }
+                                                        >
+                                                            <span>
+                                                                Add image
+                                                            </span>
+                                                            <label>
+                                                                <input
+                                                                    type="file"
+                                                                    style={{
+                                                                        display:
+                                                                            "none",
+                                                                    }}
+                                                                    onChange={
+                                                                        PreviewPhoto
+                                                                    }
+                                                                />
+                                                                <div
+                                                                    className={
+                                                                        style.add_img_block
+                                                                    }
+                                                                    style={{
+                                                                        backgroundImage: `url(${
+                                                                            Preview
+                                                                                ? Preview
+                                                                                : Work.img
+                                                                        })`,
+                                                                    }}
+                                                                ></div>
+                                                            </label>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                style.form__title
+                                                            }
+                                                        >
+                                                            <label htmlFor="">
+                                                                Name:
+                                                            </label>
+                                                            <input
+                                                                type="text"
+                                                                value={
+                                                                    Work.title
+                                                                }
+                                                                onChange={(e) =>
+                                                                    SetWork({
+                                                                        ...Work,
+                                                                        title: e
+                                                                            .target
+                                                                            .value,
+                                                                    })
+                                                                }
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                style.form__desc
+                                                            }
+                                                        >
+                                                            <label htmlFor="">
+                                                                Description:
+                                                            </label>
+                                                            <textarea
+                                                                value={
+                                                                    Work.description
+                                                                }
+                                                                onChange={(e) =>
+                                                                    SetWork({
+                                                                        ...Work,
+                                                                        description:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                    })
+                                                                }
+                                                            ></textarea>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                style.form__link
+                                                            }
+                                                        >
+                                                            <label htmlFor="">
+                                                                Link:
+                                                            </label>
+                                                            <input
+                                                                type="text"
+                                                                value={Work.url}
+                                                                onChange={(e) =>
+                                                                    SetWork({
+                                                                        ...Work,
+                                                                        url: e
+                                                                            .target
+                                                                            .value,
+                                                                    })
+                                                                }
+                                                            />
+                                                        </div>
+                                                    </main>
+                                                </div>
+                                            </>
                                         )}
                                         <button
                                             className={style.item__delete}
@@ -363,11 +669,124 @@ const page: FC = () => {
                             </button>
                         </nav>
                         {ActivePopCreate && ActivePop === "Offers" && (
-                            <CreateOffer
-                                SetActivePopCreateOffer={
-                                    SetActivePopCreateOffer
-                                }
-                            />
+                            <>
+                                <div
+                                    className={style.blur}
+                                    onClick={CloseActivePopCreate}
+                                ></div>
+                                <div
+                                    className={style.create__block}
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <header className={style.block__header}>
+                                        <button
+                                            className={style.header__exit}
+                                            onClick={CloseActivePopCreate}
+                                        >
+                                            <svg
+                                                width="14.510254"
+                                                height="14.537842"
+                                                viewBox="0 0 14.5103 14.5378"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <desc>Created with Pixso.</desc>
+                                                <defs />
+                                                <path
+                                                    id="Vector"
+                                                    d="M13.2551 1.25513L1.25513 13.2827"
+                                                    stroke="#9E9E9E"
+                                                    stroke-opacity="1.000000"
+                                                    stroke-width="2.500000"
+                                                    stroke-linejoin="round"
+                                                    stroke-linecap="round"
+                                                />
+                                                <path
+                                                    id="Vector"
+                                                    d="M1.25513 1.25513L13.2551 13.2827"
+                                                    stroke="#9E9E9E"
+                                                    stroke-opacity="1.000000"
+                                                    stroke-width="2.500000"
+                                                    stroke-linejoin="round"
+                                                    stroke-linecap="round"
+                                                />
+                                            </svg>
+                                        </button>
+                                        <h2 className={style.header__title}>
+                                            Create Offer
+                                        </h2>
+                                        <button
+                                            className={style.header__create}
+                                            onClick={CreateOffer}
+                                        >
+                                            Create
+                                        </button>
+                                    </header>
+                                    <main className={style.block__form}>
+                                        <div className={style.form__img}>
+                                            <span>Add image</span>
+                                            <label>
+                                                <input
+                                                    type="file"
+                                                    style={{ display: "none" }}
+                                                    onChange={PreviewPhoto}
+                                                />
+                                                <div
+                                                    className={
+                                                        style.add_img_block
+                                                    }
+                                                    style={{
+                                                        backgroundImage: `url(${Preview})`,
+                                                    }}
+                                                ></div>
+                                            </label>
+                                        </div>
+                                        <div className={style.form__title}>
+                                            <label htmlFor="">Name:</label>
+                                            <input
+                                                type="text"
+                                                value={Offer.title}
+                                                onChange={(e) =>
+                                                    SetOffer({
+                                                        ...Offer,
+                                                        title: e.target.value,
+                                                    })
+                                                }
+                                            />
+                                        </div>
+                                        <div className={style.form__desc}>
+                                            <label htmlFor="">
+                                                Description:
+                                            </label>
+                                            <textarea
+                                                value={Offer.description}
+                                                onChange={(e) =>
+                                                    SetOffer({
+                                                        ...Offer,
+                                                        description:
+                                                            e.target.value,
+                                                    })
+                                                }
+                                            ></textarea>
+                                        </div>
+                                        <div className={style.form__link}>
+                                            <label htmlFor="">Price:</label>
+                                            <input
+                                                type="text"
+                                                value={Offer.price}
+                                                onChange={(e) =>
+                                                    SetOffer({
+                                                        ...Offer,
+                                                        price: parseInt(
+                                                            e.target.value
+                                                        ),
+                                                    })
+                                                }
+                                            />
+                                        </div>
+                                    </main>
+                                </div>
+                            </>
                         )}
                         <div className={style.block__list}>
                             {ListOffers.offers.map((offer) => (
@@ -403,12 +822,194 @@ const page: FC = () => {
                                             </svg>
                                         </button>
                                         {ActivePopEdit && (
-                                            <EditOffer
-                                                SetActivePopEdit={
-                                                    SetActivePopEdit
-                                                }
-                                                offer={offer}
-                                            />
+                                            <>
+                                                <div
+                                                    className={style.blur}
+                                                    onClick={
+                                                        CloseActivePopCreate
+                                                    }
+                                                ></div>
+                                                <div
+                                                    className={
+                                                        style.create__block
+                                                    }
+                                                    onClick={(e) =>
+                                                        e.stopPropagation()
+                                                    }
+                                                >
+                                                    <header
+                                                        className={
+                                                            style.block__header
+                                                        }
+                                                    >
+                                                        <button
+                                                            className={
+                                                                style.header__exit
+                                                            }
+                                                            onClick={
+                                                                CloseActivePopCreate
+                                                            }
+                                                        >
+                                                            <svg
+                                                                width="14.510254"
+                                                                height="14.537842"
+                                                                viewBox="0 0 14.5103 14.5378"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <desc>
+                                                                    Created with
+                                                                    Pixso.
+                                                                </desc>
+                                                                <defs />
+                                                                <path
+                                                                    id="Vector"
+                                                                    d="M13.2551 1.25513L1.25513 13.2827"
+                                                                    stroke="#9E9E9E"
+                                                                    stroke-opacity="1.000000"
+                                                                    stroke-width="2.500000"
+                                                                    stroke-linejoin="round"
+                                                                    stroke-linecap="round"
+                                                                />
+                                                                <path
+                                                                    id="Vector"
+                                                                    d="M1.25513 1.25513L13.2551 13.2827"
+                                                                    stroke="#9E9E9E"
+                                                                    stroke-opacity="1.000000"
+                                                                    stroke-width="2.500000"
+                                                                    stroke-linejoin="round"
+                                                                    stroke-linecap="round"
+                                                                />
+                                                            </svg>
+                                                        </button>
+                                                        <h2
+                                                            className={
+                                                                style.header__title
+                                                            }
+                                                        >
+                                                            Edit Work
+                                                        </h2>
+                                                        <button
+                                                            className={
+                                                                style.header__create
+                                                            }
+                                                            onClick={EditOffer}
+                                                        >
+                                                            Save
+                                                        </button>
+                                                    </header>
+                                                    <main
+                                                        className={
+                                                            style.block__form
+                                                        }
+                                                    >
+                                                        <div
+                                                            className={
+                                                                style.form__img
+                                                            }
+                                                        >
+                                                            <span>
+                                                                Add image
+                                                            </span>
+                                                            <label>
+                                                                <input
+                                                                    type="file"
+                                                                    style={{
+                                                                        display:
+                                                                            "none",
+                                                                    }}
+                                                                    onChange={
+                                                                        PreviewPhoto
+                                                                    }
+                                                                />
+                                                                <div
+                                                                    className={
+                                                                        style.add_img_block
+                                                                    }
+                                                                    style={{
+                                                                        backgroundImage: `url(${
+                                                                            Preview
+                                                                                ? Preview
+                                                                                : Offer.img
+                                                                        })`,
+                                                                    }}
+                                                                ></div>
+                                                            </label>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                style.form__title
+                                                            }
+                                                        >
+                                                            <label htmlFor="">
+                                                                Name:
+                                                            </label>
+                                                            <input
+                                                                type="text"
+                                                                value={
+                                                                    Offer.title
+                                                                }
+                                                                onChange={(e) =>
+                                                                    SetOffer({
+                                                                        ...Offer,
+                                                                        title: e
+                                                                            .target
+                                                                            .value,
+                                                                    })
+                                                                }
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                style.form__desc
+                                                            }
+                                                        >
+                                                            <label htmlFor="">
+                                                                Description:
+                                                            </label>
+                                                            <textarea
+                                                                value={
+                                                                    Offer.description
+                                                                }
+                                                                onChange={(e) =>
+                                                                    SetOffer({
+                                                                        ...Offer,
+                                                                        description:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                    })
+                                                                }
+                                                            ></textarea>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                style.form__link
+                                                            }
+                                                        >
+                                                            <label htmlFor="">
+                                                                Price:
+                                                            </label>
+                                                            <input
+                                                                type="text"
+                                                                value={
+                                                                    Offer.price
+                                                                }
+                                                                onChange={(e) =>
+                                                                    SetOffer({
+                                                                        ...Offer,
+                                                                        price: parseInt(
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                        ),
+                                                                    })
+                                                                }
+                                                            />
+                                                        </div>
+                                                    </main>
+                                                </div>
+                                            </>
                                         )}
                                         <button
                                             className={style.item__delete}
@@ -453,7 +1054,81 @@ const page: FC = () => {
                             </div>
                         </nav>
                         {ActivePopCreate && ActivePop === "User" && (
-                            <AddPhoto SetActivePopCreate={SetActivePopCreate} />
+                            <>
+                                <div
+                                    className={style.blur}
+                                    onClick={CloseActivePopCreate}
+                                ></div>
+                                <div
+                                    className={style.create__block}
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <header className={style.block__header}>
+                                        <button
+                                            className={style.header__exit}
+                                            onClick={CloseActivePopCreate}
+                                        >
+                                            <svg
+                                                width="14.510254"
+                                                height="14.537842"
+                                                viewBox="0 0 14.5103 14.5378"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <desc>Created with Pixso.</desc>
+                                                <defs />
+                                                <path
+                                                    id="Vector"
+                                                    d="M13.2551 1.25513L1.25513 13.2827"
+                                                    stroke="#9E9E9E"
+                                                    stroke-opacity="1.000000"
+                                                    stroke-width="2.500000"
+                                                    stroke-linejoin="round"
+                                                    stroke-linecap="round"
+                                                />
+                                                <path
+                                                    id="Vector"
+                                                    d="M1.25513 1.25513L13.2551 13.2827"
+                                                    stroke="#9E9E9E"
+                                                    stroke-opacity="1.000000"
+                                                    stroke-width="2.500000"
+                                                    stroke-linejoin="round"
+                                                    stroke-linecap="round"
+                                                />
+                                            </svg>
+                                        </button>
+                                        <h2 className={style.header__title}>
+                                            Add Skill
+                                        </h2>
+                                        <button
+                                            className={style.header__create}
+                                            onClick={SavePhoto}
+                                        >
+                                            Add
+                                        </button>
+                                    </header>
+                                    <main className={style.block__form}>
+                                        <div className={style.form__img}>
+                                            <span>Add image</span>
+                                            <label>
+                                                <input
+                                                    type="file"
+                                                    style={{ display: "none" }}
+                                                    onChange={PreviewPhoto}
+                                                />
+                                                <div
+                                                    className={
+                                                        style.add_img_block
+                                                    }
+                                                    style={{
+                                                        backgroundImage: `url(${Preview})`,
+                                                    }}
+                                                ></div>
+                                            </label>
+                                        </div>
+                                    </main>
+                                </div>
+                            </>
                         )}
                         <div className={style.previw__list}>
                             <SwiperList />
