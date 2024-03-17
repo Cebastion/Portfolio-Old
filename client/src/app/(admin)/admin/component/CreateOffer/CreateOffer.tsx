@@ -95,7 +95,7 @@ const CreateOffer: FC<CreateWorkProps> = ({SetActivePopCreate}) => {
               />
             </svg>
           </button>
-          <h2 className={style.header__title}>Create Work</h2>
+          <h2 className={style.header__title}>Create Offer</h2>
           <button className={style.header__create} onClick={CreateOffer}>
             Create
           </button>

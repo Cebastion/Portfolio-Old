@@ -9,6 +9,7 @@ import { IOffers } from "../interface/offer.interface";
 import EditOffer from "./component/EditOffer/EditOffer";
 import CreateOffer from "./component/CreateOffer/CreateOffer";
 import SwiperList from "@/app/(client)/components/SwiperList";
+import AddPhoto from "./component/AddPhoto/AddPhoto";
 
 const page: FC = () => {
     const [ActivePop, SetActivePop] = useState("Works");
@@ -111,7 +112,7 @@ const page: FC = () => {
                                 Add Work
                             </button>
                         </nav>
-                        {ActivePopCreate && (
+                        {ActivePopCreate && ActivePop === "Works" && (
                             <CreateWork
                                 SetActivePopCreate={SetActivePopCreate}
                             />
@@ -187,14 +188,14 @@ const page: FC = () => {
                     </div>
                 )}
                 {ActivePop === "Offers" && (
-                    <div className={style.content__block}>
-                        <nav className={style.block__menu}>
-                            <h2 className={style.block__title}>Offers</h2>
-                            <button className={style.block__button__add} onClick={ControlActivePopCreateOffer}>
+                    <div className="content__block">
+                        <nav className="block__menu">
+                            <h2 className="block__title">Offers</h2>
+                            <button className="block__button__add" onClick={ControlActivePopCreate}>
                                 Add Offer
                             </button>
                         </nav>
-                        {ActivePopCreate && (
+                        {ActivePopCreate && ActivePop === "Offers" && (
                             <CreateOffer
                                 SetActivePopCreate={SetActivePopCreateOffer}
                             />
@@ -275,13 +276,13 @@ const page: FC = () => {
                             <div className={style.block__title}>
                                 <h2>User</h2>
                             </div>
-                            <div className={style.block__button__add} onClick={ControlActivePopCreateUser}>
+                            <div className="block__button__add" onClick={ControlActivePopCreate}>
                                 Add Photo
                             </div>
                         </nav>
-                        {ActivePopCreate && (
-                            <CreateOffer
-                                SetActivePopCreate={SetActivePopCreateUser}
+                        {ActivePopCreate && ActivePop === "User" && (
+                            <AddPhoto
+                                SetActivePopCreate={SetActivePopCreate}
                             />
                         )}
                         <div className={style.previw__list}>
