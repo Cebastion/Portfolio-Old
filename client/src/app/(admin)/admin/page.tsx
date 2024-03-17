@@ -25,8 +25,8 @@ const page: FC = () => {
     };
     const [Work, SetWork] = useState<IWork>(work);
     const [Offer, SetOffer] = useState<IOffer>(offer);
-    const [WorkEdit, SetWorkEdit] = useState<IWork>();
-    const [OfferEdit, SetOfferEdit] = useState<IOffer>();
+    const [WorkEdit, SetWorkEdit] = useState<IWork>(work);
+    const [OfferEdit, SetOfferEdit] = useState<IOffer>(offer);
     const [Preview, SetPreview] = useState<string>("");
     const [Photo, SetPhoto] = useState<File>();
     const [ActivePop, SetActivePop] = useState("Works");
@@ -39,20 +39,22 @@ const page: FC = () => {
     const [ListWorks, SetListWorks] = useState<IWorks>({ works: [] });
     const [ListOffers, SetListOffers] = useState<IOffers>({ offers: [] });
 
-    const ControlActivePopCreate = () => {
+    const ControlActivePopWorkCreate = () => {
         SetActivePopCreate(!ActivePopCreate);
     };
 
-    const ControlActivePopEdit = () => {
+    const ControlActivePopWorkEdit = (work: IWork) => {
         SetActivePopEdit(!ActivePopEdit);
+        SetWorkEdit(work)
     };
 
     const ControlActivePopCreateOffer = () => {
         SetActivePopCreate(!ActivePopCreateOffer);
     };
 
-    const ControlActivePopEditOffer = () => {
+    const ControlActivePopOfferEdit = (offer: IOffer) => {
         SetActivePopEdit(!ActivePopEditOffer);
+        SetOfferEdit(offer)
     };
 
     const ControlActivePopCreateUser = () => {
@@ -74,7 +76,13 @@ const page: FC = () => {
         }
     };
 
-    const CloseActivePopCreate = () => {
+    const CloseActivePopWorkCreate = () => {
+        SetActivePopCreate(false);
+        SetWork(work);
+        SetPreview("");
+    };
+
+    const CloseActivePopOfferCreate = () => {
         SetActivePopCreate(false);
         SetWork(work);
         SetPreview("");
@@ -111,13 +119,13 @@ const page: FC = () => {
             if (Photo) {
                 const formData = new FormData();
                 formData.append("img", Photo);
-                formData.append("title", Work.title);
-                formData.append("description", Work.description);
-                formData.append("url", Work.url);
+                formData.append("title", WorkEdit.title);
+                formData.append("description", WorkEdit.description);
+                formData.append("url", WorkEdit.url);
 
                 axios
                     .post(
-                        `http://localhost:5500/edit_work/?_id=${Work._id}`,
+                        `http://localhost:5500/edit_work/?_id=${WorkEdit._id}`,
                         formData
                     )
                     .then((res) => {
@@ -127,9 +135,9 @@ const page: FC = () => {
                     });
             } else {
                 const formData = new FormData();
-                formData.append("title", Work.title);
-                formData.append("description", Work.description);
-                formData.append("url", Work.url);
+                formData.append("title", WorkEdit.title);
+                formData.append("description", WorkEdit.description);
+                formData.append("url", WorkEdit.url);
 
                 axios
                     .post(`http://localhost:5500/edit_work`, formData)
@@ -177,13 +185,13 @@ const page: FC = () => {
             if (Photo) {
                 const formData = new FormData();
                 formData.append("img", Photo);
-                formData.append("title", Offer.title);
-                formData.append("description", Offer.description);
-                formData.append("price", Offer.price.toString());
+                formData.append("title", OfferEdit.title);
+                formData.append("description", OfferEdit.description);
+                formData.append("price", OfferEdit.price.toString());
 
                 axios
                     .post(
-                        `http://localhost:5500/edit_work/?_id=${Offer._id}`,
+                        `http://localhost:5500/edit_work/?_id=${OfferEdit._id}`,
                         formData
                     )
                     .then((res) => {
@@ -193,9 +201,9 @@ const page: FC = () => {
                     });
             } else {
                 const formData = new FormData();
-                formData.append("title", Offer.title);
-                formData.append("description", Offer.description);
-                formData.append("url", Offer.price.toString());
+                formData.append("title", OfferEdit.title);
+                formData.append("description", OfferEdit.description);
+                formData.append("url", OfferEdit.price.toString());
 
                 axios
                     .post(`http://localhost:5500/edit_work`, formData)
@@ -286,7 +294,7 @@ const page: FC = () => {
                             <h2 className={style.block__title}>Works</h2>
                             <button
                                 className={style.block__button__add}
-                                onClick={ControlActivePopCreate}
+                                onClick={ControlActivePopWorkCreate}
                             >
                                 Add Work
                             </button>
@@ -295,7 +303,7 @@ const page: FC = () => {
                             <>
                                 <div
                                     className={style.blur}
-                                    onClick={CloseActivePopCreate}
+                                    onClick={CloseActivePopWorkCreate}
                                 ></div>
                                 <div
                                     className={style.create__block}
@@ -304,7 +312,7 @@ const page: FC = () => {
                                     <header className={style.block__header}>
                                         <button
                                             className={style.header__exit}
-                                            onClick={CloseActivePopCreate}
+                                            onClick={CloseActivePopWorkCreate}
                                         >
                                             <svg
                                                 width="14.510254"
@@ -421,7 +429,7 @@ const page: FC = () => {
                                     <nav className={style.item__menu}>
                                         <button
                                             className={style.item__edit}
-                                            onClick={ControlActivePopEdit}
+                                            onClick={() => ControlActivePopWorkEdit(work)}
                                         >
                                             <svg
                                                 width="18.190430"
@@ -447,7 +455,7 @@ const page: FC = () => {
                                                 <div
                                                     className={style.blur}
                                                     onClick={
-                                                        CloseActivePopCreate
+                                                        CloseActivePopWorkCreate
                                                     }
                                                 ></div>
                                                 <div
@@ -468,7 +476,7 @@ const page: FC = () => {
                                                                 style.header__exit
                                                             }
                                                             onClick={
-                                                                CloseActivePopCreate
+                                                                CloseActivePopWorkCreate
                                                             }
                                                         >
                                                             <svg
@@ -672,7 +680,7 @@ const page: FC = () => {
                             <>
                                 <div
                                     className={style.blur}
-                                    onClick={CloseActivePopCreate}
+                                    onClick={CloseActivePopOfferCreate}
                                 ></div>
                                 <div
                                     className={style.create__block}
@@ -681,7 +689,7 @@ const page: FC = () => {
                                     <header className={style.block__header}>
                                         <button
                                             className={style.header__exit}
-                                            onClick={CloseActivePopCreate}
+                                            onClick={CloseActivePopOfferCreate}
                                         >
                                             <svg
                                                 width="14.510254"
@@ -800,7 +808,7 @@ const page: FC = () => {
                                     <nav className={style.item__menu}>
                                         <button
                                             className={style.item__edit}
-                                            onClick={ControlActivePopEdit}
+                                            onClick={() => ControlActivePopOfferEdit(offer)}
                                         >
                                             <svg
                                                 width="18.190430"
@@ -826,7 +834,7 @@ const page: FC = () => {
                                                 <div
                                                     className={style.blur}
                                                     onClick={
-                                                        CloseActivePopCreate
+                                                        CloseActivePopOfferCreate
                                                     }
                                                 ></div>
                                                 <div
@@ -847,7 +855,7 @@ const page: FC = () => {
                                                                 style.header__exit
                                                             }
                                                             onClick={
-                                                                CloseActivePopCreate
+                                                                CloseActivePopOfferCreate
                                                             }
                                                         >
                                                             <svg
@@ -1048,7 +1056,7 @@ const page: FC = () => {
                             </div>
                             <div
                                 className="block__button__add"
-                                onClick={ControlActivePopCreate}
+                                onClick={CloseActivePopWorkCreate}
                             >
                                 Add Photo
                             </div>
@@ -1057,7 +1065,7 @@ const page: FC = () => {
                             <>
                                 <div
                                     className={style.blur}
-                                    onClick={CloseActivePopCreate}
+                                    onClick={CloseActivePopWorkCreate}
                                 ></div>
                                 <div
                                     className={style.create__block}
@@ -1066,7 +1074,7 @@ const page: FC = () => {
                                     <header className={style.block__header}>
                                         <button
                                             className={style.header__exit}
-                                            onClick={CloseActivePopCreate}
+                                            onClick={CloseActivePopWorkCreate}
                                         >
                                             <svg
                                                 width="14.510254"
