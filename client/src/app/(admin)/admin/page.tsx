@@ -14,6 +14,10 @@ const page: FC = () => {
     const [ActivePop, SetActivePop] = useState("Works");
     const [ActivePopCreate, SetActivePopCreate] = useState(false);
     const [ActivePopEdit, SetActivePopEdit] = useState(false);
+    const [ActivePopCreateOffer, SetActivePopCreateOffer] = useState(false);
+    const [ActivePopEditOffer, SetActivePopEditOffer] = useState(false);
+    const [ActivePopCreateUser, SetActivePopCreateUser] = useState(false);
+    const [ActivePopEditUser, SetActivePopEditUser] = useState(false);
     const [ListWorks, SetListWorks] = useState<IWorks>({ works: [] });
     const [ListOffers, SetListOffers] = useState<IOffers>({ offers: [] });
 
@@ -23,6 +27,22 @@ const page: FC = () => {
 
     const ControlActivePopEdit = () => {
         SetActivePopEdit(!ActivePopEdit);
+    };
+
+    const ControlActivePopCreateOffer = () => {
+        SetActivePopCreate(!ActivePopCreateOffer);
+    };
+
+    const ControlActivePopEditOffer = () => {
+        SetActivePopEdit(!ActivePopEditOffer);
+    };
+
+    const ControlActivePopCreateUser = () => {
+        SetActivePopCreate(!ActivePopCreateUser);
+    };
+
+    const ControlActivePopEditUser = () => {
+        SetActivePopEdit(!ActivePopEditUser);
     };
 
     const ControlActivePop = (status: string) => {
@@ -102,10 +122,10 @@ const page: FC = () => {
                                     key={work._id}
                                     className={style.block__item}
                                 >
-                                    <h3 className="item__title">
+                                    <h3 className={style.item__title}>
                                         {work.title}
                                     </h3>
-                                    <nav className="item__menu">
+                                    <nav className={style.item__menu}>
                                         <button
                                             className={style.item__edit}
                                             onClick={ControlActivePopEdit}
@@ -138,7 +158,7 @@ const page: FC = () => {
                                             />
                                         )}
                                         <button
-                                            className="item__delete"
+                                            className={style.item__delete}
                                             onClick={() => Delete(work._id)}
                                         >
                                             <svg
@@ -167,16 +187,16 @@ const page: FC = () => {
                     </div>
                 )}
                 {ActivePop === "Offers" && (
-                    <div className="content__block">
-                        <nav className="block__menu">
-                            <h2 className="block__title">Offers</h2>
-                            <button className="block__button__add">
+                    <div className={style.content__block}>
+                        <nav className={style.block__menu}>
+                            <h2 className={style.block__title}>Offers</h2>
+                            <button className={style.block__button__add} onClick={ControlActivePopCreateOffer}>
                                 Add Offer
                             </button>
                         </nav>
                         {ActivePopCreate && (
                             <CreateOffer
-                                SetActivePopCreate={SetActivePopCreate}
+                                SetActivePopCreate={SetActivePopCreateOffer}
                             />
                         )}
                         <div className={style.block__list}>
@@ -185,10 +205,10 @@ const page: FC = () => {
                                     key={offer._id}
                                     className={style.block__item}
                                 >
-                                    <h3 className="item__title">
+                                    <h3 className={style.item__title}>
                                         {offer.title}
                                     </h3>
-                                    <nav className="item__menu">
+                                    <nav className={style.item__menu}>
                                         <button
                                             className={style.item__edit}
                                             onClick={ControlActivePopEdit}
@@ -221,7 +241,7 @@ const page: FC = () => {
                                             />
                                         )}
                                         <button
-                                            className="item__delete"
+                                            className={style.item__delete}
                                             onClick={() => Delete(offer._id)}
                                         >
                                             <svg
@@ -250,21 +270,21 @@ const page: FC = () => {
                     </div>
                 )}
                 {ActivePop === "User" && (
-                    <div className="content__block">
-                        <nav className="block__menu">
-                            <div className="block__title">
+                    <div className={style.content__block}>
+                        <nav className={style.block__menu}>
+                            <div className={style.block__title}>
                                 <h2>User</h2>
                             </div>
-                            <div className="block__button__add">
+                            <div className={style.block__button__add} onClick={ControlActivePopCreateUser}>
                                 Add Photo
                             </div>
                         </nav>
                         {ActivePopCreate && (
                             <CreateOffer
-                                SetActivePopCreate={SetActivePopCreate}
+                                SetActivePopCreate={SetActivePopCreateUser}
                             />
                         )}
-                        <div className="previw__list">
+                        <div className={style.previw__list}>
                             <SwiperList/>
                         </div>
                     </div>
