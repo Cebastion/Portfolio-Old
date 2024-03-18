@@ -559,7 +559,7 @@ const page: FC = () => {
                                                                         backgroundImage: `url(${
                                                                             Preview
                                                                                 ? Preview
-                                                                                : Work.img
+                                                                                : WorkEdit.img
                                                                         })`,
                                                                     }}
                                                                 ></div>
@@ -576,11 +576,11 @@ const page: FC = () => {
                                                             <input
                                                                 type="text"
                                                                 value={
-                                                                    Work.title
+                                                                    WorkEdit.title
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetWork({
-                                                                        ...Work,
+                                                                    SetWorkEdit({
+                                                                        ...WorkEdit,
                                                                         title: e
                                                                             .target
                                                                             .value,
@@ -598,11 +598,11 @@ const page: FC = () => {
                                                             </label>
                                                             <textarea
                                                                 value={
-                                                                    Work.description
+                                                                    WorkEdit.description
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetWork({
-                                                                        ...Work,
+                                                                    SetWorkEdit({
+                                                                        ...WorkEdit,
                                                                         description:
                                                                             e
                                                                                 .target
@@ -623,8 +623,8 @@ const page: FC = () => {
                                                                 type="text"
                                                                 value={Work.url}
                                                                 onChange={(e) =>
-                                                                    SetWork({
-                                                                        ...Work,
+                                                                    SetWorkEdit({
+                                                                        ...WorkEdit,
                                                                         url: e
                                                                             .target
                                                                             .value,
@@ -895,7 +895,7 @@ const page: FC = () => {
                                                                 style.header__title
                                                             }
                                                         >
-                                                            Edit Work
+                                                            Edit Offer
                                                         </h2>
                                                         <button
                                                             className={
@@ -938,7 +938,7 @@ const page: FC = () => {
                                                                         backgroundImage: `url(${
                                                                             Preview
                                                                                 ? Preview
-                                                                                : Offer.img
+                                                                                : OfferEdit.img
                                                                         })`,
                                                                     }}
                                                                 ></div>
@@ -955,11 +955,11 @@ const page: FC = () => {
                                                             <input
                                                                 type="text"
                                                                 value={
-                                                                    Offer.title
+                                                                    OfferEdit.title
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetOffer({
-                                                                        ...Offer,
+                                                                    SetOfferEdit({
+                                                                        ...OfferEdit,
                                                                         title: e
                                                                             .target
                                                                             .value,
@@ -980,8 +980,8 @@ const page: FC = () => {
                                                                     Offer.description
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetOffer({
-                                                                        ...Offer,
+                                                                    SetOfferEdit({
+                                                                        ...OfferEdit,
                                                                         description:
                                                                             e
                                                                                 .target
@@ -1001,11 +1001,11 @@ const page: FC = () => {
                                                             <input
                                                                 type="text"
                                                                 value={
-                                                                    Offer.price
+                                                                    OfferEdit.price
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetOffer({
-                                                                        ...Offer,
+                                                                    SetOfferEdit({
+                                                                        ...OfferEdit,
                                                                         price: parseInt(
                                                                             e
                                                                                 .target
