@@ -53,16 +53,16 @@ const page: FC = () => {
     };
 
     const ControlActivePopOfferEdit = (offer: IOffer) => {
-        SetActivePopEdit(!ActivePopEditOffer);
+        SetActivePopEditOffer(!ActivePopEditOffer);
         SetOfferEdit(offer)
     };
 
     const ControlActivePopCreateUser = () => {
-        SetActivePopCreate(!ActivePopCreateUser);
+        SetActivePopCreateUser(!ActivePopCreateUser);
     };
 
     const ControlActivePopEditUser = () => {
-        SetActivePopEdit(!ActivePopEditUser);
+        SetActivePopEditUser(!ActivePopEditUser);
     };
 
     const ControlActivePop = (status: string) => {
@@ -455,7 +455,7 @@ const page: FC = () => {
                                                 <div
                                                     className={style.blur}
                                                     onClick={
-                                                        CloseActivePopWorkCreate
+                                                        () => ControlActivePopWorkEdit(work)
                                                     }
                                                 ></div>
                                                 <div
@@ -556,11 +556,10 @@ const page: FC = () => {
                                                                         style.add_img_block
                                                                     }
                                                                     style={{
-                                                                        backgroundImage: `url(${
-                                                                            Preview
+                                                                        backgroundImage: `url(${Preview
                                                                                 ? Preview
                                                                                 : WorkEdit.img
-                                                                        })`,
+                                                                            })`,
                                                                     }}
                                                                 ></div>
                                                             </label>
@@ -676,7 +675,7 @@ const page: FC = () => {
                                 Add Offer
                             </button>
                         </nav>
-                        {ActivePopCreate && ActivePop === "Offers" && (
+                        {ActivePopCreateOffer && ActivePop === "Offers" && (
                             <>
                                 <div
                                     className={style.blur}
@@ -834,7 +833,7 @@ const page: FC = () => {
                                                 <div
                                                     className={style.blur}
                                                     onClick={
-                                                        CloseActivePopOfferCreate
+                                                       () => ControlActivePopOfferEdit(offer)
                                                     }
                                                 ></div>
                                                 <div
@@ -855,7 +854,7 @@ const page: FC = () => {
                                                                 style.header__exit
                                                             }
                                                             onClick={
-                                                                CloseActivePopOfferCreate
+                                                                () => ControlActivePopOfferEdit(offer)
                                                             }
                                                         >
                                                             <svg
@@ -935,11 +934,10 @@ const page: FC = () => {
                                                                         style.add_img_block
                                                                     }
                                                                     style={{
-                                                                        backgroundImage: `url(${
-                                                                            Preview
+                                                                        backgroundImage: `url(${Preview
                                                                                 ? Preview
                                                                                 : OfferEdit.img
-                                                                        })`,
+                                                                            })`,
                                                                     }}
                                                                 ></div>
                                                             </label>
@@ -1056,16 +1054,16 @@ const page: FC = () => {
                             </div>
                             <div
                                 className="block__button__add"
-                                onClick={CloseActivePopWorkCreate}
+                                onClick={ControlActivePopCreateUser}
                             >
                                 Add Photo
                             </div>
                         </nav>
-                        {ActivePopCreate && ActivePop === "User" && (
+                        {ActivePopCreateUser && ActivePop === "User" && (
                             <>
                                 <div
                                     className={style.blur}
-                                    onClick={CloseActivePopWorkCreate}
+                                    onClick={ControlActivePopCreateUser}
                                 ></div>
                                 <div
                                     className={style.create__block}
@@ -1074,7 +1072,7 @@ const page: FC = () => {
                                     <header className={style.block__header}>
                                         <button
                                             className={style.header__exit}
-                                            onClick={CloseActivePopWorkCreate}
+                                            onClick={ControlActivePopCreateUser}
                                         >
                                             <svg
                                                 width="14.510254"
