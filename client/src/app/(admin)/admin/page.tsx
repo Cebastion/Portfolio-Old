@@ -9,24 +9,24 @@ import axios from "axios";
 import { randomBytes } from "crypto";
 
 const page: FC = () => {
-    const offer: IOffer = {
+    const offerempty: IOffer = {
         _id: "",
         title: "",
         description: "",
         price: 0,
         img: "",
     };
-    const work: IWork = {
+    const workempty: IWork = {
         _id: "",
         title: "",
         description: "",
         url: "",
         img: "",
     };
-    const [Work, SetWork] = useState<IWork>(work);
-    const [Offer, SetOffer] = useState<IOffer>(offer);
-    const [WorkEdit, SetWorkEdit] = useState<IWork>(work);
-    const [OfferEdit, SetOfferEdit] = useState<IOffer>(offer);
+    const [Work, SetWork] = useState<IWork>(workempty);
+    const [Offer, SetOffer] = useState<IOffer>(offerempty);
+    const [WorkEdit, SetWorkEdit] = useState<IWork>(workempty);
+    const [OfferEdit, SetOfferEdit] = useState<IOffer>(offerempty);
     const [Preview, SetPreview] = useState<string>("");
     const [Photo, SetPhoto] = useState<File>();
     const [ActivePop, SetActivePop] = useState("Works");
@@ -44,6 +44,7 @@ const page: FC = () => {
     };
 
     const ControlActivePopWorkEdit = (work: IWork) => {
+        console.log(work)
         SetActivePopEdit(!ActivePopEdit);
         SetWorkEdit(work)
     };
@@ -78,13 +79,13 @@ const page: FC = () => {
 
     const CloseActivePopWorkCreate = () => {
         SetActivePopCreate(false);
-        SetWork(work);
+        SetWork(workempty);
         SetPreview("");
     };
 
     const CloseActivePopOfferCreate = () => {
         SetActivePopCreate(false);
-        SetWork(work);
+        SetOffer(offerempty);
         SetPreview("");
     };
 
@@ -103,7 +104,7 @@ const page: FC = () => {
                     .then((res) => {
                         if (res.status === 200) {
                             SetActivePopCreate(false);
-                            SetWork(work);
+                            SetWork(workempty);
                             SetPreview("");
                             window.location.reload();
                         }
@@ -170,7 +171,7 @@ const page: FC = () => {
                     )
                     .then((res) => {
                         SetActivePopCreateOffer(false);
-                        SetOffer(offer);
+                        SetOffer(offerempty);
                         SetPreview("");
                         window.location.reload();
                     });
@@ -455,7 +456,7 @@ const page: FC = () => {
                                                 <div
                                                     className={style.blur}
                                                     onClick={
-                                                        CloseActivePopWorkCreate
+                                                        () => ControlActivePopWorkEdit(work)
                                                     }
                                                 ></div>
                                                 <div
@@ -476,7 +477,7 @@ const page: FC = () => {
                                                                 style.header__exit
                                                             }
                                                             onClick={
-                                                                CloseActivePopWorkCreate
+                                                                () => ControlActivePopWorkEdit(work)
                                                             }
                                                         >
                                                             <svg
