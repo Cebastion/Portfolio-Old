@@ -44,16 +44,16 @@ const page: FC = () => {
     };
 
     const ControlActivePopWorkEdit = (work: IWork) => {
-        console.log(work)
         SetActivePopEdit(!ActivePopEdit);
         SetWorkEdit(work)
     };
 
     const ControlActivePopCreateOffer = () => {
-        SetActivePopCreate(!ActivePopCreateOffer);
+        SetActivePopCreateOffer(!ActivePopCreateOffer);
     };
 
     const ControlActivePopOfferEdit = (offer: IOffer) => {
+        console.log('click')
         SetActivePopEditOffer(!ActivePopEditOffer);
         SetOfferEdit(offer)
     };
@@ -84,7 +84,7 @@ const page: FC = () => {
     };
 
     const CloseActivePopOfferCreate = () => {
-        SetActivePopCreate(false);
+        SetActivePopCreateOffer(false);
         SetOffer(offerempty);
         SetPreview("");
     };
