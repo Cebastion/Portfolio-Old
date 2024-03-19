@@ -54,16 +54,16 @@ const page: FC = () => {
     };
 
     const ControlActivePopOfferEdit = (offer: IOffer) => {
-        SetActivePopEdit(!ActivePopEditOffer);
+        SetActivePopEditOffer(!ActivePopEditOffer);
         SetOfferEdit(offer)
     };
 
     const ControlActivePopCreateUser = () => {
-        SetActivePopCreate(!ActivePopCreateUser);
+        SetActivePopCreateUser(!ActivePopCreateUser);
     };
 
     const ControlActivePopEditUser = () => {
-        SetActivePopEdit(!ActivePopEditUser);
+        SetActivePopEditUser(!ActivePopEditUser);
     };
 
     const ControlActivePop = (status: string) => {
@@ -557,11 +557,10 @@ const page: FC = () => {
                                                                         style.add_img_block
                                                                     }
                                                                     style={{
-                                                                        backgroundImage: `url(${
-                                                                            Preview
+                                                                        backgroundImage: `url(${Preview
                                                                                 ? Preview
-                                                                                : Work.img
-                                                                        })`,
+                                                                                : WorkEdit.img
+                                                                            })`,
                                                                     }}
                                                                 ></div>
                                                             </label>
@@ -577,11 +576,11 @@ const page: FC = () => {
                                                             <input
                                                                 type="text"
                                                                 value={
-                                                                    Work.title
+                                                                    WorkEdit.title
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetWork({
-                                                                        ...Work,
+                                                                    SetWorkEdit({
+                                                                        ...WorkEdit,
                                                                         title: e
                                                                             .target
                                                                             .value,
@@ -599,11 +598,11 @@ const page: FC = () => {
                                                             </label>
                                                             <textarea
                                                                 value={
-                                                                    Work.description
+                                                                    WorkEdit.description
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetWork({
-                                                                        ...Work,
+                                                                    SetWorkEdit({
+                                                                        ...WorkEdit,
                                                                         description:
                                                                             e
                                                                                 .target
@@ -624,8 +623,8 @@ const page: FC = () => {
                                                                 type="text"
                                                                 value={Work.url}
                                                                 onChange={(e) =>
-                                                                    SetWork({
-                                                                        ...Work,
+                                                                    SetWorkEdit({
+                                                                        ...WorkEdit,
                                                                         url: e
                                                                             .target
                                                                             .value,
@@ -677,7 +676,7 @@ const page: FC = () => {
                                 Add Offer
                             </button>
                         </nav>
-                        {ActivePopCreate && ActivePop === "Offers" && (
+                        {ActivePopCreateOffer && ActivePop === "Offers" && (
                             <>
                                 <div
                                     className={style.blur}
@@ -835,7 +834,7 @@ const page: FC = () => {
                                                 <div
                                                     className={style.blur}
                                                     onClick={
-                                                        CloseActivePopOfferCreate
+                                                       () => ControlActivePopOfferEdit(offer)
                                                     }
                                                 ></div>
                                                 <div
@@ -856,7 +855,7 @@ const page: FC = () => {
                                                                 style.header__exit
                                                             }
                                                             onClick={
-                                                                CloseActivePopOfferCreate
+                                                                () => ControlActivePopOfferEdit(offer)
                                                             }
                                                         >
                                                             <svg
@@ -896,7 +895,7 @@ const page: FC = () => {
                                                                 style.header__title
                                                             }
                                                         >
-                                                            Edit Work
+                                                            Edit Offer
                                                         </h2>
                                                         <button
                                                             className={
@@ -936,11 +935,10 @@ const page: FC = () => {
                                                                         style.add_img_block
                                                                     }
                                                                     style={{
-                                                                        backgroundImage: `url(${
-                                                                            Preview
+                                                                        backgroundImage: `url(${Preview
                                                                                 ? Preview
-                                                                                : Offer.img
-                                                                        })`,
+                                                                                : OfferEdit.img
+                                                                            })`,
                                                                     }}
                                                                 ></div>
                                                             </label>
@@ -956,11 +954,11 @@ const page: FC = () => {
                                                             <input
                                                                 type="text"
                                                                 value={
-                                                                    Offer.title
+                                                                    OfferEdit.title
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetOffer({
-                                                                        ...Offer,
+                                                                    SetOfferEdit({
+                                                                        ...OfferEdit,
                                                                         title: e
                                                                             .target
                                                                             .value,
@@ -981,8 +979,8 @@ const page: FC = () => {
                                                                     Offer.description
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetOffer({
-                                                                        ...Offer,
+                                                                    SetOfferEdit({
+                                                                        ...OfferEdit,
                                                                         description:
                                                                             e
                                                                                 .target
@@ -1002,11 +1000,11 @@ const page: FC = () => {
                                                             <input
                                                                 type="text"
                                                                 value={
-                                                                    Offer.price
+                                                                    OfferEdit.price
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetOffer({
-                                                                        ...Offer,
+                                                                    SetOfferEdit({
+                                                                        ...OfferEdit,
                                                                         price: parseInt(
                                                                             e
                                                                                 .target
@@ -1057,16 +1055,16 @@ const page: FC = () => {
                             </div>
                             <div
                                 className="block__button__add"
-                                onClick={CloseActivePopWorkCreate}
+                                onClick={ControlActivePopCreateUser}
                             >
                                 Add Photo
                             </div>
                         </nav>
-                        {ActivePopCreate && ActivePop === "User" && (
+                        {ActivePopCreateUser && ActivePop === "User" && (
                             <>
                                 <div
                                     className={style.blur}
-                                    onClick={CloseActivePopWorkCreate}
+                                    onClick={ControlActivePopCreateUser}
                                 ></div>
                                 <div
                                     className={style.create__block}
@@ -1075,7 +1073,7 @@ const page: FC = () => {
                                     <header className={style.block__header}>
                                         <button
                                             className={style.header__exit}
-                                            onClick={CloseActivePopWorkCreate}
+                                            onClick={ControlActivePopCreateUser}
                                         >
                                             <svg
                                                 width="14.510254"
