@@ -2,7 +2,7 @@ export interface IOffer {
   _id: string;
   title: string;
   description: string;
-  price: number;
+  price: string;
   img: string;
 }
 
@@ -13,6 +13,6 @@ export interface IOfferSchema extends Document {
   _id: string;
   title: string;
   description: string;
-  price: number;
+  price: string;
   img: string;
 }

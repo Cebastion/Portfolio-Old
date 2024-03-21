@@ -45,13 +45,13 @@ export default function Home() {
           </div>
           <ListWork />
         </div>
-        <div className={style.content__offers}>
+        {/* <div className={style.content__offers}>
           <div className={style.works__title}>
             <span>Featured offers</span>
             <Link href="/offers">view all offers</Link>
           </div>
           <ListOffers />
-        </div>
+        </div> */}
       </div>
     </main>
   )

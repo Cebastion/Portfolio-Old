@@ -25,16 +25,16 @@ app.get("/works", async (req: Request, res: Response) => {
     res.json(works)
 });
 
-app.get("/offer/:_id", async (req: Request, res: Response) => {
+/*app.get("/offer/:_id", async (req: Request, res: Response) => {
     const _id = req.params._id;
     const offer = await db.GetOffer(_id);
     res.json(offer)
-});
+});*/
 
-app.get("/offers", async (req: Request, res: Response) => {
+/*app.get("/offers", async (req: Request, res: Response) => {
     const offer = await db.GetOffers();
     res.json(offer)
-});
+});*/
 
 app.post("/add_work", upload.single("img"), async (req: Request, res: Response) => {
         const data: IWork = req.body;
@@ -46,14 +46,15 @@ app.post("/add_work", upload.single("img"), async (req: Request, res: Response) 
     }
 );
 
-app.post("/add_offer", async (req: Request, res: Response) => {
+/*app.post("/add_offer", async (req: Request, res: Response) => {
     const data: IOffer = req.body;
     const file = req.file
+    console.log(data)
     if (file) {
         await firebase.SavePhoto(file, data._id);
         await db.AddOffer(data);
     }
-});
+});*/
 
 app.post("/edit_work", upload.single("img"), async (req: Request, res: Response) => {
     const data = req.body;
@@ -64,24 +65,24 @@ app.post("/edit_work", upload.single("img"), async (req: Request, res: Response)
     }
 });
 
-app.post("/edit_offer", async (req: Request, res: Response) => {
+/*app.post("/edit_offer", async (req: Request, res: Response) => {
     const data = req.body;
     const file = req.file;
     if (file) {
         await firebase.UpdatePhoto(file, data._id);
         await db.UpdateOffer(data);
     }
-});
+});*/
 
 app.post("/delete_work/:_id", async (req: Request, res: Response) => {
     const _id = req.params._id;
     await db.DeleteWork(_id);
 });
 
-app.post("/delete_offer/:_id", async (req: Request, res: Response) => {
+/*app.post("/delete_offer/:_id", async (req: Request, res: Response) => {
     const _id = req.params._id;
     await db.DeleteOffer(_id);
-});
+});*/
 
 app.post("/sendEmail", (req: Request, res: Response) => {
     const { nameproject, email, offer } = req.body;
