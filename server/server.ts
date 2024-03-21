@@ -8,7 +8,7 @@ import { IWork } from "./interface/works.interface";
 import bodyParser from "body-parser";
 import multer from "multer";
 import { FireBaseService } from "./service/firebase.service";
-import { IOffer } from "./interface/offer.interface";
+//import { IOffer } from "./interface/offer.interface";
 
 const db = new MongoDb(new ConfigService());
 const firebase = new FireBaseService()
