@@ -14,13 +14,13 @@
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "sass": "^1.69.7",
+    "sass": "^1.72.0",
     "swiper": "^11.0.6"
   },
   "devDependencies": {
-    "@types/node": "20.11.28",
-    "@types/react": "18.2.66",
+    "@types/node": "20.11.30",
+    "@types/react": "18.2.67",
     "@types/react-dom": "^18",
-    "typescript": "5.4.2"
+    "typescript": "5.4.3"
   }
 }

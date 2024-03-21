@@ -104,6 +104,15 @@ app.post('/save_photo/:_id', async (req: Request, res: Response) => {
     }
 });
 
+app.post('/save_photo_skill/:_id', upload.single("img"), async (req: Request, res: Response) => {
+    const _id = req.params._id;
+    const file = req.file;
+    console.log(file, _id)
+    if (file) {
+        await firebase.SavePhotoSkill(file, _id);
+    }
+});
+
 app.post('/delete_photo/:_id', async (req: Request, res: Response) => {
     const _id = req.params._id;
     await firebase.DeletePhotoSkill(_id);

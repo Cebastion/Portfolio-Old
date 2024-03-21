@@ -71,7 +71,7 @@ const page: FC = () => {
                 formdata.append("description", Work.description);
                 formdata.append("url", Work.url);
                 await axios
-                    .post(`http://localhost:5500/add_work`, formdata)
+                    .post(`https://glorious-space-garbanzo-57x569xgqvghp6gq-5500.app.github.dev/add_work`, formdata)
                     .then((res) => {
                         if (res.status === 200) {
                             SetActivePopCreate(false);
@@ -97,7 +97,7 @@ const page: FC = () => {
 
                 axios
                     .post(
-                        `http://localhost:5500/edit_work/?_id=${WorkEdit._id}`,
+                        `https://glorious-space-garbanzo-57x569xgqvghp6gq-5500.app.github.dev/edit_work/?_id=${WorkEdit._id}`,
                         formData
                     )
                     .then((res) => {
@@ -131,7 +131,7 @@ const page: FC = () => {
                 const formdata = new FormData();
                 formdata.append("img", Photo);
                 await axios
-                    .post(`http://localhost:5500/save_photo/${_id}`, formdata)
+                    .post(`https://glorious-space-garbanzo-57x569xgqvghp6gq-5500.app.github.dev/save_photo_skill/${_id}`, formdata)
                     .then((res) => {
                         SetActivePopCreate(false);
                         SetPreview("");
@@ -178,9 +178,9 @@ const page: FC = () => {
                 <nav className="menu">
                     <ul className={style.menu_list}>
                         <li onClick={() => ControlActivePop("Works")}>Works</li>
-                        <li onClick={() => ControlActivePop("Offers")}>
+                        {/*<li onClick={() => ControlActivePop("Offers")}>
                             Offers
-                        </li>
+                        </li>*/}
                         <li onClick={() => ControlActivePop("User")}>User</li>
                     </ul>
                 </nav>

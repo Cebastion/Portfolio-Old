@@ -9,7 +9,7 @@ const SwiperList = () => {
     const [Photos, SetPhotos] = useState([]);
 
     const getPhotos = async () => {
-        const { data } = await axios.get("http://localhost:5500/photos");
+        const { data } = await axios.get("https://glorious-space-garbanzo-57x569xgqvghp6gq-5500.app.github.dev/photos");
         SetPhotos(data);
     };
 
