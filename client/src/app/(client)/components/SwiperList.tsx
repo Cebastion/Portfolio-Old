@@ -19,9 +19,9 @@ const SwiperList = () => {
 
     return (
         <Swiper spaceBetween={30} slidesPerView={3} autoplay speed={2000}>
-            {Photos.map((img) => {
+            {Photos.map((img, index) => {
                 return (
-                    <SwiperSlide>
+                    <SwiperSlide key={index}>
                         <Image src={img} alt="skill" />
                     </SwiperSlide>
                 );

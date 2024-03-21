@@ -3,7 +3,6 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 import style from "./admin.module.scss";
 import { AdminService } from "../service/admin.service";
 import { IWork, IWorks } from "../interface/work.interface";
-import { IOffer, IOffers } from "../interface/offer.interface";
 import SwiperList from "@/app/(client)/components/SwiperList";
 import axios from "axios";
 import { randomBytes } from "crypto";
@@ -26,7 +25,6 @@ const page: FC = () => {
     const [ActivePopCreateUser, SetActivePopCreateUser] = useState(false);
     const [ActivePopEditUser, SetActivePopEditUser] = useState(false);
     const [ListWorks, SetListWorks] = useState<IWorks>({ works: [] });
-    const [ListOffers, SetListOffers] = useState<IOffers>({ offers: [] });
 
     const ControlActivePopWorkCreate = () => {
         SetActivePopCreate(!ActivePopCreate);
