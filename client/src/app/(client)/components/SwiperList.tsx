@@ -22,7 +22,7 @@ const SwiperList = () => {
             {Photos.map((img, index) => {
                 return (
                     <SwiperSlide key={index}>
-                        <Image src={img} alt="skill" />
+                        <Image src={img} alt="skill" width={50} height={50}/>
                     </SwiperSlide>
                 );
             })}
