@@ -71,7 +71,7 @@ const page: FC = () => {
                 formdata.append("description", Work.description);
                 formdata.append("url", Work.url);
                 await axios
-                    .post(`http://localhost:5500/add_work`, formdata)
+                    .post(`https://portfolio-server-2chb126qo-cebastion.vercel.app/add_work`, formdata)
                     .then((res) => {
                         if (res.status === 200) {
                             SetActivePopCreate(false);
@@ -97,7 +97,7 @@ const page: FC = () => {
 
                 axios
                     .post(
-                        `http://localhost:5500/edit_work/?_id=${WorkEdit._id}`,
+                        `https://portfolio-server-2chb126qo-cebastion.vercel.app/edit_work/?_id=${WorkEdit._id}`,
                         formData
                     )
                     .then((res) => {
@@ -112,7 +112,7 @@ const page: FC = () => {
                 formData.append("url", WorkEdit.url);
 
                 axios
-                    .post(`http://localhost:5500/edit_work`, formData)
+                    .post(`https://portfolio-server-2chb126qo-cebastion.vercel.app/edit_work`, formData)
                     .then((res) => {
                         SetActivePopEdit(false);
                         SetPreview("");
@@ -131,7 +131,7 @@ const page: FC = () => {
                 const formdata = new FormData();
                 formdata.append("img", Photo);
                 await axios
-                    .post(`http://localhost:5500/save_photo_skill/${_id}`, formdata)
+                    .post(`https://portfolio-server-2chb126qo-cebastion.vercel.app/save_photo_skill/${_id}`, formdata)
                     .then((res) => {
                         SetActivePopCreate(false);
                         SetPreview("");

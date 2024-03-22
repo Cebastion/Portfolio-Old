@@ -4,20 +4,20 @@ import { IOffers } from '../interface/offer.interface'
 
 export class AdminService {
   static async GetWorks(): Promise<IWorks> {
-    const { data } = await axios.get<IWorks>('http://localhost:5500/works')
+    const { data } = await axios.get<IWorks>('https://portfolio-server-2chb126qo-cebastion.vercel.app/works')
     return data
   }
 
   static async GetOffers(): Promise<IOffers> {
-    const { data } = await axios.get<IOffers>('http://localhost:5500/offers')
+    const { data } = await axios.get<IOffers>('https://portfolio-server-2chb126qo-cebastion.vercel.app/offers')
     return data
   } 
 
   static async DeleteWorks(_id: string) {
-    await axios.post(`http://localhost:5500/delete_work/${_id}`)
+    await axios.post(`https://portfolio-server-2chb126qo-cebastion.vercel.app/delete_work/${_id}`)
   }
 
   static async DeleteOffers(_id: string) {
-    await axios.post(`http://localhost:5500/delete_offer/${_id}`)
+    await axios.post(`https://portfolio-server-2chb126qo-cebastion.vercel.app/delete_offer/${_id}`)
   }
 }
