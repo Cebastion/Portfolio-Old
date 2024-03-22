@@ -16,7 +16,7 @@ const upload = multer();
 
 app.use(json());
 app.use(cors({
-    origin: ['https://portfolio-l6nb3q7a7-cebastion.vercel.app', 'https://portfolio-l6nb3q7a7-cebastion.vercel.app/admin'],
+    origin: ['https://portfolio-one-silk-37.vercel.app', 'https://portfolio-one-silk-37.vercel.app/admin'],
     credentials: true
 }));
 app.use(bodyParser.json());
