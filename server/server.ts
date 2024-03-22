@@ -15,7 +15,7 @@ const app = express();
 const upload = multer();
 
 app.use(json());
-app.use(cors());
+app.use(cors('*'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
