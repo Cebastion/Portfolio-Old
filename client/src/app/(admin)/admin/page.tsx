@@ -71,7 +71,7 @@ const page: FC = () => {
                 formdata.append("description", Work.description);
                 formdata.append("url", Work.url);
                 await axios
-                    .post(`https://glorious-space-garbanzo-57x569xgqvghp6gq-5500.app.github.dev/add_work`, formdata)
+                    .post(`http://localhost:5500/add_work`, formdata)
                     .then((res) => {
                         if (res.status === 200) {
                             SetActivePopCreate(false);
@@ -97,7 +97,7 @@ const page: FC = () => {
 
                 axios
                     .post(
-                        `https://glorious-space-garbanzo-57x569xgqvghp6gq-5500.app.github.dev/edit_work/?_id=${WorkEdit._id}`,
+                        `http://localhost:5500/edit_work/?_id=${WorkEdit._id}`,
                         formData
                     )
                     .then((res) => {
@@ -131,7 +131,7 @@ const page: FC = () => {
                 const formdata = new FormData();
                 formdata.append("img", Photo);
                 await axios
-                    .post(`https://glorious-space-garbanzo-57x569xgqvghp6gq-5500.app.github.dev/save_photo_skill/${_id}`, formdata)
+                    .post(`http://localhost:5500/save_photo_skill/${_id}`, formdata)
                     .then((res) => {
                         SetActivePopCreate(false);
                         SetPreview("");

@@ -77,6 +77,7 @@ app.post("/edit_work", upload.single("img"), async (req: Request, res: Response)
 app.post("/delete_work/:_id", async (req: Request, res: Response) => {
     const _id = req.params._id;
     await db.DeleteWork(_id);
+    await firebase.DeletePhoto(_id);
 });
 
 /*app.post("/delete_offer/:_id", async (req: Request, res: Response) => {

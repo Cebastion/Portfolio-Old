@@ -42,9 +42,22 @@ export class FireBaseService {
     }
 
     async DeletePhoto(_id: string) {
-        const filename = `${_id}.webp`;
-        const photoRef = ref(this.storage, filename);
-        await deleteObject(photoRef);
+        try {
+            const filename = `${_id}.webp`;
+            const photoRef = ref(this.storage, filename);
+
+            // Проверка существования объекта перед удалением (необязательно)
+            const downloadUrl = await getDownloadURL(photoRef);
+            if (!downloadUrl) {
+                console.log(`Файл '${filename}' не найден в хранилище. Пропуск удаления.`);
+                return;
+            }
+
+            await deleteObject(photoRef);
+            console.log(`Файл '${filename}' успешно удален.`);
+        } catch (error) {
+            
+        }
     }
 
     async GetPhoto(_id: string) {
