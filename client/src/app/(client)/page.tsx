@@ -2,7 +2,6 @@ import ListWhyMe from './components/ListWhyMe'
 import ListWork from './components/ListWork'
 import Link from 'next/link'
 import style from './main.module.scss'
-import ListOffers from './components/ListOffers'
 import SwiperList from './components/SwiperList'
 
 export default function Home() {
