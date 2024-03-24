@@ -32,7 +32,7 @@ const page: FC = () => {
 
     const ControlActivePopWorkEdit = (work: IWork) => {
         SetActivePopEdit(!ActivePopEdit);
-        SetWorkEdit(work)
+        SetWorkEdit(work);
     };
 
     const ControlActivePopCreateUser = () => {
@@ -71,7 +71,10 @@ const page: FC = () => {
                 formdata.append("description", Work.description);
                 formdata.append("url", Work.url);
                 await axios
-                    .post(`https://portfolio-server-rho-blue.vercel.app/add_work`, formdata)
+                    .post(
+                        `https://portfolio-server-rho-blue.vercel.app/add_work`,
+                        formdata
+                    )
                     .then((res) => {
                         if (res.status === 200) {
                             SetActivePopCreate(false);
@@ -112,7 +115,10 @@ const page: FC = () => {
                 formData.append("url", WorkEdit.url);
 
                 axios
-                    .post(`https://portfolio-server-rho-blue.vercel.app/edit_work`, formData)
+                    .post(
+                        `https://portfolio-server-rho-blue.vercel.app/edit_work`,
+                        formData
+                    )
                     .then((res) => {
                         SetActivePopEdit(false);
                         SetPreview("");
@@ -131,7 +137,10 @@ const page: FC = () => {
                 const formdata = new FormData();
                 formdata.append("img", Photo);
                 await axios
-                    .post(`https://portfolio-server-rho-blue.vercel.app/save_photo_skill/${_id}`, formdata)
+                    .post(
+                        `https://portfolio-server-rho-blue.vercel.app/save_photo_skill/${_id}`,
+                        formdata
+                    )
                     .then((res) => {
                         SetActivePopCreate(false);
                         SetPreview("");
@@ -327,7 +336,9 @@ const page: FC = () => {
                                     <nav className={style.item__menu}>
                                         <button
                                             className={style.item__edit}
-                                            onClick={() => ControlActivePopWorkEdit(work)}
+                                            onClick={() =>
+                                                ControlActivePopWorkEdit(work)
+                                            }
                                         >
                                             <svg
                                                 width="18.190430"
@@ -352,8 +363,10 @@ const page: FC = () => {
                                             <>
                                                 <div
                                                     className={style.blur}
-                                                    onClick={
-                                                        () => ControlActivePopWorkEdit(work)
+                                                    onClick={() =>
+                                                        ControlActivePopWorkEdit(
+                                                            work
+                                                        )
                                                     }
                                                 ></div>
                                                 <div
@@ -373,8 +386,10 @@ const page: FC = () => {
                                                             className={
                                                                 style.header__exit
                                                             }
-                                                            onClick={
-                                                                () => ControlActivePopWorkEdit(work)
+                                                            onClick={() =>
+                                                                ControlActivePopWorkEdit(
+                                                                    work
+                                                                )
                                                             }
                                                         >
                                                             <svg
@@ -454,10 +469,11 @@ const page: FC = () => {
                                                                         style.add_img_block
                                                                     }
                                                                     style={{
-                                                                        backgroundImage: `url(${Preview
+                                                                        backgroundImage: `url(${
+                                                                            Preview
                                                                                 ? Preview
                                                                                 : WorkEdit.img
-                                                                            })`,
+                                                                        })`,
                                                                     }}
                                                                 ></div>
                                                             </label>
@@ -476,12 +492,14 @@ const page: FC = () => {
                                                                     WorkEdit.title
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetWorkEdit({
-                                                                        ...WorkEdit,
-                                                                        title: e
-                                                                            .target
-                                                                            .value,
-                                                                    })
+                                                                    SetWorkEdit(
+                                                                        {
+                                                                            ...WorkEdit,
+                                                                            title: e
+                                                                                .target
+                                                                                .value,
+                                                                        }
+                                                                    )
                                                                 }
                                                             />
                                                         </div>
@@ -498,13 +516,15 @@ const page: FC = () => {
                                                                     WorkEdit.description
                                                                 }
                                                                 onChange={(e) =>
-                                                                    SetWorkEdit({
-                                                                        ...WorkEdit,
-                                                                        description:
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                    })
+                                                                    SetWorkEdit(
+                                                                        {
+                                                                            ...WorkEdit,
+                                                                            description:
+                                                                                e
+                                                                                    .target
+                                                                                    .value,
+                                                                        }
+                                                                    )
                                                                 }
                                                             ></textarea>
                                                         </div>
@@ -520,12 +540,14 @@ const page: FC = () => {
                                                                 type="text"
                                                                 value={Work.url}
                                                                 onChange={(e) =>
-                                                                    SetWorkEdit({
-                                                                        ...WorkEdit,
-                                                                        url: e
-                                                                            .target
-                                                                            .value,
-                                                                    })
+                                                                    SetWorkEdit(
+                                                                        {
+                                                                            ...WorkEdit,
+                                                                            url: e
+                                                                                .target
+                                                                                .value,
+                                                                        }
+                                                                    )
                                                                 }
                                                             />
                                                         </div>
@@ -565,15 +587,13 @@ const page: FC = () => {
                 {ActivePop === "User" && (
                     <div className={style.content__block}>
                         <nav className={style.block__menu}>
-                            <div className={style.block__title}>
-                                <h2>User</h2>
-                            </div>
-                            <div
-                                className="block__button__add"
+                            <h2 className={style.block__title}>Skills</h2>
+                            <button
+                                className={style.block__button__add}
                                 onClick={ControlActivePopCreateUser}
                             >
-                                Add Photo
-                            </div>
+                                Add Skill
+                            </button>
                         </nav>
                         {ActivePopCreateUser && ActivePop === "User" && (
                             <>
@@ -630,7 +650,7 @@ const page: FC = () => {
                                         </button>
                                     </header>
                                     <main className={style.block__form}>
-                                        <div className={style.form__img}>
+                                        <div className={style.form__img__add}>
                                             <span>Add image</span>
                                             <label>
                                                 <input

@@ -270,6 +270,28 @@
   }
 }
 
+.form__img__add{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  label {
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    height: 500px;
+    background-color: gray;
+  }
+  span {
+    color: rgb(81, 80, 80);
+    font-family: Heebo;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    text-align: left;
+  }
+}
+
 .add_img_block {
   background-position: center;
   background-size: cover;

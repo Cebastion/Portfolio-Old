@@ -4,6 +4,7 @@ import "swiper/css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Autoplay } from "swiper/modules";
 
 const SwiperList = () => {
     const [Photos, SetPhotos] = useState([]);
@@ -18,11 +19,11 @@ const SwiperList = () => {
     }, [])
 
     return (
-        <Swiper spaceBetween={30} slidesPerView={3} autoplay speed={2000}>
+        <Swiper spaceBetween={0} slidesPerView={3} modules={[Autoplay]} autoplay={{"delay": 2500}} speed={1000}>
             {Photos.map((img, index) => {
                 return (
                     <SwiperSlide key={index}>
-                        <Image src={img} alt="skill" width={50} height={50}/>
+                        <Image src={img} alt="skill" width={300} height={300}/>
                     </SwiperSlide>
                 );
             })}
