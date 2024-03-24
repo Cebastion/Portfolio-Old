@@ -15,7 +15,10 @@ const app = express();
 const upload = multer();
 
 app.use(json());
-app.use(cors());
+app.use(cors({
+    origin: ['https://portfolio-one-silk-37.vercel.app', 'https://portfolio-one-silk-37.vercel.app/admin'],
+    credentials: true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

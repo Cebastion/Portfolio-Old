@@ -9,7 +9,6 @@ const Header: FC = () => {
                 <ul className={style.header__menu}>
                     <li><Link href="/">Home</Link></li>
                     <li><Link href="/works">Works</Link></li>
-                    <li><Link href="/offers">Offers</Link></li>
                     <li><Link href="/contact">Contact</Link></li>
                 </ul>
             </div>
