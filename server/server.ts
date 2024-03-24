@@ -1,7 +1,6 @@
 require("dotenv").config();
 import cors from "cors";
 import express, { json, Request, Response } from "express";
-import { ConfigService } from "./config/config.service";
 import { MailerService } from "./service/mailer.service";
 import { MongoDb } from "./service/mongodb.service";
 import { IWork } from "./interface/works.interface";
@@ -10,7 +9,7 @@ import multer from "multer";
 import { FireBaseService } from "./service/firebase.service";
 //import { IOffer } from "./interface/offer.interface";
 
-const db = new MongoDb(new ConfigService());
+const db = new MongoDb();
 const firebase = new FireBaseService()
 const app = express();
 const upload = multer();
@@ -91,7 +90,6 @@ app.post("/sendEmail", (req: Request, res: Response) => {
         nameproject,
         email,
         offer,
-        new ConfigService()
     );
     const result = mailerService.sendEmail();
     res.send(result)

@@ -1,5 +1,4 @@
 import { createTransport } from 'nodemailer'
-import { IConfigService } from '../config/config.interface'
 import { ImailOptions } from '../interface/mailOptions.interface'
 
 export class MailerService {
@@ -9,7 +8,7 @@ export class MailerService {
   private mailOptions: ImailOptions
   private transporter: any
 
-  constructor(email: string, offer: string, nameproject: string, private readonly configService: IConfigService) {
+  constructor(email: string, offer: string, nameproject: string) {
     this.email = email
     this.offer = offer
     this.nameproject = nameproject
@@ -24,8 +23,8 @@ export class MailerService {
     this.transporter = createTransport({
       service: 'Gmail',
       auth: {
-        user: this.configService.get('EMAIL'),
-        pass: this.configService.get('PASSWORD'),
+        user: 'kdimon2006@gmail.com',
+        pass: 'jezavzrvubmsquyq',
       },
     });
   }

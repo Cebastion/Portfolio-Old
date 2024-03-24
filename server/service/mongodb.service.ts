@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import {IConfigService} from '../config/config.interface';
 import {IWork, IWorks} from '../interface/works.interface';
 import {WorkModule} from '../module/work.module';
 import {IOffer, IOffers} from '../interface/offer.interface';
@@ -9,8 +8,8 @@ import { FireBaseService } from './firebase.service';
 export class MongoDb {
   private DB: string;
   private firebase = new FireBaseService()
-  constructor(private readonly configService: IConfigService) {
-    this.DB = this.configService.get('URL_MONGO');
+  constructor() {
+    this.DB = 'mongodb+srv://kdimon2006:14881488@portfolio.pwsxs9f.mongodb.net/Portfolio?retryWrites=true&w=majority';
   }
 
   async connect() {
