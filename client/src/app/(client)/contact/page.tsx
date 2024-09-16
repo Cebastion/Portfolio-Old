@@ -15,7 +15,7 @@ const Page: NextPage<Props> = ({}) => {
     })
 
     function SendEmail() {
-        axios.post('http://localhost:5500/sendEmail', Letter)
+        axios.post('https://portfolio-old-server.vercel.app/sendEmail', Letter)
     }
 
     return (

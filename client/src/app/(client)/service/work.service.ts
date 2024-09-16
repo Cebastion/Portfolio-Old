@@ -3,7 +3,7 @@ import axios from "axios"
 
 export class WorkService {
     async GetWorks() {
-        const { data } = await axios.get<IWorks>('https://portfolio-server-rho-blue.vercel.app/works')
+        const { data } = await axios.get<IWorks>('https://portfolio-old-server.vercel.app/works')
     return data
     }
 }

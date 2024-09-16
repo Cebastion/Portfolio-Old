@@ -10,7 +10,7 @@ const SwiperList = () => {
     const [Photos, SetPhotos] = useState([]);
 
     const getPhotos = async () => {
-        const { data } = await axios.get("https://portfolio-server-rho-blue.vercel.app/photos");
+        const { data } = await axios.get("https://portfolio-old-server.vercel.app/photos");
         SetPhotos(data);
     };
 
